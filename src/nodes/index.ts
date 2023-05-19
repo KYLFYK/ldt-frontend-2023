@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { CustomNode } from '../components/CustomNode'
+import { CustomNode } from '../components/custom-node'
 import { EntryPoints } from './entry-points'
 import { NODE_TYPES } from './types'
 
