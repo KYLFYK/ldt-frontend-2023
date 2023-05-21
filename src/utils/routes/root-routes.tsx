@@ -1,7 +1,9 @@
 import React, { FC } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
+import { DocumentsLayout } from '../../containers/documents-layout'
 import { MainLayout } from '../../containers/main-layout'
+import { Documents } from '../../pages/documents'
 import { ForgetPassword } from '../../pages/forget-password'
 import { Home } from '../../pages/home'
 import { Login } from '../../pages/login'
@@ -14,7 +16,10 @@ export const RootRoutes: FC = () => {
     <Routes>
       <Route path={RoutePaths.BASE} element={<MainLayout />}>
         <Route path={RoutePaths.BASE} element={<Home />} />
-        <Route path={RoutePaths.DOCUMENTS} element={<Home />} />
+        <Route path={RoutePaths.DOCUMENTS} element={<DocumentsLayout />}>
+          <Route index={true} element={<Documents />} />
+          <Route path={'*'} element={<Documents />} />
+        </Route>
         <Route path={RoutePaths.WORKFLOWS} element={<WorkFlows />} />
         <Route path={RoutePaths.CALENDAR} element={<Home />} />
         <Route path={RoutePaths.CHARTS} element={<Home />} />

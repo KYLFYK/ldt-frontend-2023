@@ -22,12 +22,16 @@ export const MainLayout: FC = () => {
     setSidebarOpen(true)
   }, [])
 
+  const handleCloseSideBar = useCallback(() => {
+    setSidebarOpen(false)
+  }, [])
+
   return (
     <div>
       <Menu
         setSidebarOpen={setSidebarOpen}
         sidebarOpen={sidebarOpen}
-        handleOpenSideBar={handleOpenSideBar}
+        handleCloseSideBar={handleCloseSideBar}
       />
       <div className="lg:pl-72">
         <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
@@ -120,7 +124,7 @@ export const MainLayout: FC = () => {
             </div>
           </div>
         </div>
-        <main className="py-10">
+        <main className="py-4 sm:py-10">
           <div className="px-4 sm:px-6 lg:px-8">
             <Outlet />
           </div>

@@ -12,6 +12,7 @@ export const Breadcrumbs: FC = () => {
       .split('/')
       .filter(Boolean)
       .map((el) => `/${el}` as RoutePaths)
+      .filter((el) => Object.values(RoutePaths).includes(el))
 
     return names.map((el, index) => ({
       name: pathToName(el),

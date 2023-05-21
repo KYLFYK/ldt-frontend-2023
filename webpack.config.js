@@ -19,16 +19,9 @@ if (process.env.NODE_ENV === 'production') {
 
 const css = fs.readFileSync('src/input.css', 'utf8')
 
-postcss()
-  .use(atImport())
-  .process(css, {
-    from: 'src/input.css',
-  })
-  .then((result) => {
-    const output = result.css
-
-    console.log(output)
-  })
+postcss().use(atImport()).process(css, {
+  from: 'src/input.css',
+})
 
 module.exports = {
   mode,
@@ -40,6 +33,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     assetModuleFilename: 'assets/[hash][ext][query]',
     clean: true,
+    publicPath: '/',
   },
   devServer: {
     hot: true,
@@ -51,7 +45,15 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.(html)$/, use: ['html-loader'] },
+      {
+        test: /\.(html)$/,
+        use: {
+          loader: 'html-loader',
+          options: {
+            sources: false,
+          },
+        },
+      },
       {
         test: /\.(png|jpe?g|gif|svg|webp|ico)$/i,
         type: mode === 'production' ? 'asset' : 'asset/resource',

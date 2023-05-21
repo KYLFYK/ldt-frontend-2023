@@ -48,13 +48,13 @@ type TNavItem = {
 type TProps = {
   sidebarOpen: boolean
   setSidebarOpen: Dispatch<SetStateAction<boolean>>
-  handleOpenSideBar: () => void
+  handleCloseSideBar: () => void
 }
 
 export const Menu: FC<TProps> = ({
   setSidebarOpen,
   sidebarOpen,
-  handleOpenSideBar,
+  handleCloseSideBar,
 }) => {
   const { pathname } = useLocation()
 
@@ -157,7 +157,7 @@ export const Menu: FC<TProps> = ({
                     <button
                       type="button"
                       className="-m-2.5 p-2.5"
-                      onClick={handleOpenSideBar}
+                      onClick={handleCloseSideBar}
                     >
                       <span className="sr-only">Закрыть</span>
                       <XMarkIcon
