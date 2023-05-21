@@ -2,17 +2,20 @@ import { Menu as TailMenu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Bars3Icon, BellIcon } from '@heroicons/react/24/outline'
 import React, { FC, Fragment, useCallback, useState } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
+import { Breadcrumbs } from '../components/main-layout/breadcrumbs'
 import { Menu } from '../components/main-layout/menu'
 import { classNames } from '../utils/common'
+import { RoutePaths } from '../utils/routes/route-paths'
 
 const userNavigation = [
-  { name: 'Your profile', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Мой профиль', href: RoutePaths.PROFILE },
+  { name: 'Выйти', href: RoutePaths.LOGIN },
 ]
 
 export const MainLayout: FC = () => {
+  const { pathname } = useLocation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const handleOpenSideBar = useCallback(() => {
@@ -33,7 +36,7 @@ export const MainLayout: FC = () => {
             className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
             onClick={handleOpenSideBar}
           >
-            <span className="sr-only">Open sidebar</span>
+            <span className="sr-only">Открыть меню</span>
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
 
@@ -43,13 +46,18 @@ export const MainLayout: FC = () => {
             aria-hidden="true"
           />
 
-          <div className="flex flex-1 justify-end gap-x-4 self-stretch lg:gap-x-6">
+          <div
+            className={`flex flex-1 items-center justify-end gap-x-4 self-stretch lg:gap-x-6${
+              pathname !== RoutePaths.BASE ? ' sm:justify-between' : ''
+            }`}
+          >
+            <Breadcrumbs />
             <div className="flex items-center gap-x-4 lg:gap-x-6">
               <button
                 type="button"
                 className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
               >
-                <span className="sr-only">View notifications</span>
+                <span className="sr-only">Посмотреть уведомления</span>
                 <BellIcon className="h-6 w-6" aria-hidden="true" />
               </button>
 
@@ -62,7 +70,7 @@ export const MainLayout: FC = () => {
               {/* Profile dropdown */}
               <TailMenu as="div" className="relative">
                 <TailMenu.Button className="-m-1.5 flex items-center p-1.5">
-                  <span className="sr-only">Open user menu</span>
+                  <span className="sr-only">Меню пользователя</span>
                   <img
                     className="h-8 w-8 rounded-full bg-gray-50"
                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -73,7 +81,7 @@ export const MainLayout: FC = () => {
                       className="ml-4 text-sm font-semibold leading-6 text-gray-900"
                       aria-hidden="true"
                     >
-                      Tom Cook
+                      Том Круз
                     </span>
                     <ChevronDownIcon
                       className="ml-2 h-5 w-5 text-gray-400"

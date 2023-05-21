@@ -12,6 +12,7 @@ import {
 import React, { Dispatch, FC, Fragment, SetStateAction, useMemo } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
+import { COMPANY_NAME } from '../../constants/app'
 import { classNames } from '../../utils/common'
 import { RoutePaths } from '../../utils/routes/route-paths'
 
@@ -158,7 +159,7 @@ export const Menu: FC<TProps> = ({
                       className="-m-2.5 p-2.5"
                       onClick={handleOpenSideBar}
                     >
-                      <span className="sr-only">Close sidebar</span>
+                      <span className="sr-only">Закрыть</span>
                       <XMarkIcon
                         className="h-6 w-6 text-white"
                         aria-hidden="true"
@@ -167,12 +168,12 @@ export const Menu: FC<TProps> = ({
                   </div>
                 </Transition.Child>
                 {/* Sidebar component, swap this element with another sidebar if you like */}
-                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-4">
+                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
                   <div className="flex h-16 shrink-0 items-center">
                     <img
                       className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=white"
-                      alt="Your Company"
+                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                      alt={COMPANY_NAME}
                     />
                   </div>
                   <nav className="flex flex-1 flex-col">
@@ -185,16 +186,16 @@ export const Menu: FC<TProps> = ({
                                 to={item.href}
                                 className={classNames(
                                   item.current
-                                    ? 'bg-indigo-700 text-white'
-                                    : 'text-indigo-200 hover:bg-indigo-700 hover:text-white',
+                                    ? 'bg-gray-50 text-indigo-600'
+                                    : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
                                   'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
                                 )}
                               >
                                 <item.icon
                                   className={classNames(
                                     item.current
-                                      ? 'text-white'
-                                      : 'text-indigo-200 group-hover:text-white',
+                                      ? 'text-indigo-600'
+                                      : 'text-gray-400 group-hover:text-indigo-600',
                                     'h-6 w-6 shrink-0'
                                   )}
                                   aria-hidden="true"
@@ -206,8 +207,8 @@ export const Menu: FC<TProps> = ({
                         </ul>
                       </li>
                       <li>
-                        <div className="text-xs font-semibold leading-6 text-indigo-200">
-                          Your teams
+                        <div className="text-xs font-semibold leading-6 text-gray-400">
+                          Ваши команды
                         </div>
                         <ul role="list" className="-mx-2 mt-2 space-y-1">
                           {teams.map((team) => (
@@ -216,12 +217,19 @@ export const Menu: FC<TProps> = ({
                                 to={team.href}
                                 className={classNames(
                                   team.current
-                                    ? 'bg-indigo-700 text-white'
-                                    : 'text-indigo-200 hover:bg-indigo-700 hover:text-white',
+                                    ? 'bg-gray-50 text-indigo-600'
+                                    : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
                                   'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
                                 )}
                               >
-                                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
+                                <span
+                                  className={classNames(
+                                    team.current
+                                      ? 'border-indigo-600 text-indigo-600'
+                                      : 'border-gray-200 text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600',
+                                    'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium'
+                                  )}
+                                >
                                   {team.initial}
                                 </span>
                                 <span className="truncate">{team.name}</span>
@@ -233,10 +241,10 @@ export const Menu: FC<TProps> = ({
                       <li className="mt-auto">
                         <NavLink
                           to="#"
-                          className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-indigo-700 hover:text-white"
+                          className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
                         >
                           <Cog6ToothIcon
-                            className="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
+                            className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-indigo-600"
                             aria-hidden="true"
                           />
                           Настройки
@@ -254,12 +262,12 @@ export const Menu: FC<TProps> = ({
       {/* Static sidebar for desktop */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
         {/* Sidebar component, swap this element with another sidebar if you like */}
-        <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-4">
+        <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
           <div className="flex h-16 shrink-0 items-center">
             <img
               className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=white"
-              alt="Your Company"
+              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              alt={COMPANY_NAME}
             />
           </div>
           <nav className="flex flex-1 flex-col">
@@ -272,16 +280,16 @@ export const Menu: FC<TProps> = ({
                         to={item.href}
                         className={classNames(
                           item.current
-                            ? 'bg-indigo-700 text-white'
-                            : 'text-indigo-200 hover:bg-indigo-700 hover:text-white',
+                            ? 'bg-gray-50 text-indigo-600'
+                            : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
                           'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
                         )}
                       >
                         <item.icon
                           className={classNames(
                             item.current
-                              ? 'text-white'
-                              : 'text-indigo-200 group-hover:text-white',
+                              ? 'text-indigo-600'
+                              : 'text-gray-400 group-hover:text-indigo-600',
                             'h-6 w-6 shrink-0'
                           )}
                           aria-hidden="true"
@@ -293,7 +301,7 @@ export const Menu: FC<TProps> = ({
                 </ul>
               </li>
               <li>
-                <div className="text-xs font-semibold leading-6 text-indigo-200">
+                <div className="text-xs font-semibold leading-6 text-gray-400">
                   Your teams
                 </div>
                 <ul role="list" className="-mx-2 mt-2 space-y-1">
@@ -303,12 +311,19 @@ export const Menu: FC<TProps> = ({
                         to={team.href}
                         className={classNames(
                           team.current
-                            ? 'bg-indigo-700 text-white'
-                            : 'text-indigo-200 hover:bg-indigo-700 hover:text-white',
+                            ? 'bg-gray-50 text-indigo-600'
+                            : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
                           'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
                         )}
                       >
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
+                        <span
+                          className={classNames(
+                            team.current
+                              ? 'border-indigo-600 text-indigo-600'
+                              : 'border-gray-200 text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600',
+                            'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium'
+                          )}
+                        >
                           {team.initial}
                         </span>
                         <span className="truncate">{team.name}</span>
@@ -320,10 +335,10 @@ export const Menu: FC<TProps> = ({
               <li className="mt-auto">
                 <NavLink
                   to="#"
-                  className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-indigo-700 hover:text-white"
+                  className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
                 >
                   <Cog6ToothIcon
-                    className="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
+                    className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-indigo-600"
                     aria-hidden="true"
                   />
                   Настройки
