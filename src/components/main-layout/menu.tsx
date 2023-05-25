@@ -6,9 +6,8 @@ import {
   DocumentDuplicateIcon,
   FolderIcon,
   HomeIcon,
-  UsersIcon,
   XMarkIcon,
-} from '@heroicons/react/24/outline'
+} from '@heroicons/react/20/solid'
 import React, { Dispatch, FC, Fragment, SetStateAction, useMemo } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
@@ -69,36 +68,27 @@ export const Menu: FC<TProps> = ({
           strongEq: true,
         }),
       },
-
       {
-        name: 'Документы',
-        icon: UsersIcon,
-        ...calcHrefAndCurrent({
-          route: RoutePaths.DOCUMENTS,
-          pathname,
-        }),
-      },
-      {
-        name: 'Процессы',
+        name: 'Проверки',
         icon: FolderIcon,
         ...calcHrefAndCurrent({
-          route: RoutePaths.WORKFLOWS,
+          route: RoutePaths.AUDIT,
           pathname,
         }),
       },
       {
-        name: 'Календарь',
+        name: 'Конструктор проверок',
         icon: CalendarIcon,
         ...calcHrefAndCurrent({
-          route: RoutePaths.CALENDAR,
+          route: RoutePaths.CONSTRUCTOR,
           pathname,
         }),
       },
       {
-        name: 'График',
+        name: 'Справочник',
         icon: DocumentDuplicateIcon,
         ...calcHrefAndCurrent({
-          route: RoutePaths.CHARTS,
+          route: RoutePaths.GUIDES,
           pathname,
         }),
       },
@@ -262,7 +252,7 @@ export const Menu: FC<TProps> = ({
       {/* Static sidebar for desktop */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
         {/* Sidebar component, swap this element with another sidebar if you like */}
-        <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
+        <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-gray-100 px-6 pb-4">
           <div className="flex h-16 shrink-0 items-center">
             <img
               className="h-8 w-auto"

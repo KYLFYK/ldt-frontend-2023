@@ -1,4 +1,4 @@
-import { FolderIcon as LibFolderIcon } from '@heroicons/react/24/outline'
+import { FolderIcon as LibFolderIcon } from '@heroicons/react/20/solid'
 import React, { FC } from 'react'
 
 import { TIconProps } from './index'

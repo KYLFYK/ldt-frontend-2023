@@ -1,6 +1,6 @@
 import { Menu as TailMenu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import { Bars3Icon, BellIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, BellIcon } from '@heroicons/react/20/solid'
 import React, { FC, Fragment, useCallback, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 

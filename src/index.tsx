@@ -1,12 +1,11 @@
-import './input.css'
-
 import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
 
 import { store } from './ducks'
+import './input.css'
 import { RootRoutes } from './utils/routes/root-routes'
-import { BrowserRouter } from 'react-router-dom'
 
 const container = document.getElementById('root')!
 const root = createRoot(container)

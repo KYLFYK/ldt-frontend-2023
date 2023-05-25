@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 import { TDocuments } from '../types/documents'
 
@@ -8,19 +8,15 @@ export const DocumentsMockState: {
   tree: {
     files: [
       {
-        createAt: moment()
+        createAt: dayjs()
           .add(-4, 'days')
-          .set({
-            hours: 12,
-            minutes: 36,
-          })
+          .set('hours', 12)
+          .set('minutes', 32)
           .toISOString(),
-        updateAt: moment()
+        updateAt: dayjs()
           .add(-4, 'days')
-          .set({
-            hours: 12,
-            minutes: 36,
-          })
+          .set('hours', 12)
+          .set('minutes', 36)
           .toISOString(),
         fileName: 'Договор №413-341-34',
         mediaType: 'document',
@@ -33,23 +29,19 @@ export const DocumentsMockState: {
         name: 'Важные документы',
         files: [
           {
-            createAt: moment()
-              .set({
-                hours: 12,
-                minutes: 36,
-                years: 2023,
-                days: 22,
-                months: 5,
-              })
+            createAt: dayjs()
+              .set('hours', 12)
+              .set('minutes', 36)
+              .set('years', 2023)
+              .set('days', 22)
+              .set('months', 5)
               .toISOString(),
-            updateAt: moment()
-              .set({
-                hours: 12,
-                minutes: 36,
-                years: 2023,
-                days: 22,
-                months: 5,
-              })
+            updateAt: dayjs()
+              .set('hours', 12)
+              .set('minutes', 36)
+              .set('years', 2023)
+              .set('days', 22)
+              .set('months', 5)
               .toISOString(),
             fileName: 'Отчет 22.05.2023',
             mediaType: 'document',

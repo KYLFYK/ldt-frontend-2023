@@ -3,12 +3,12 @@
   "singleQuote": true,
   "semi": false,
   "importOrder": [
-    "^(.*).css",
     "<THIRD_PARTY_MODULES>",
     "^@/components/(.*)$",
     "^@/constants/(.*)$",
     "^@/context/(.*)$",
     "^@/lib/(.*)$",
+    "^(.*).css",
     "^[./]"
   ],
   "importOrderSeparation": true,

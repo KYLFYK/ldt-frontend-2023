@@ -1,15 +1,15 @@
-import { DocumentPlusIcon, FolderPlusIcon } from '@heroicons/react/24/outline'
+import { DocumentPlusIcon, FolderPlusIcon } from '@heroicons/react/20/solid'
 import React, { FC, useMemo } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
-import { Folder } from '../components/documents/folder'
-import { FolderButton } from '../components/documents/folder-button'
-import { FolderLayout } from '../components/documents/folder-layout'
+import { Folder } from '../components/reports/folder'
+import { FolderButton } from '../components/reports/folder-button'
+import { FolderLayout } from '../components/reports/folder-layout'
 import DocumentIcon from '../icons/document'
 import { DocumentsMockState } from '../mocks/documents-mock-state'
 import { TDocuments } from '../types/documents'
 
-export const Documents: FC = () => {
+export const Reports: FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
 

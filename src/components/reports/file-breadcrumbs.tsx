@@ -20,19 +20,19 @@ export const FileBreadcrumbs: FC<TProps> = ({ params }) => {
     const paramsList = params['*']
     if (paramsList) {
       if (paramsList.split('/').length === 1) {
-        navigate(RoutePaths.DOCUMENTS)
+        navigate(RoutePaths.REPORTS)
       } else {
         const arr = paramsList.split('/')
         arr.splice(-1)
 
-        navigate(`${RoutePaths.DOCUMENTS}/${arr.join('/')}`)
+        navigate(`${RoutePaths.REPORTS}/${arr.join('/')}`)
       }
     }
   }, [params])
 
   const routes = useMemo(() => {
     if (params['*']) {
-      let prev: string = RoutePaths.DOCUMENTS
+      let prev: string = RoutePaths.REPORTS
       let currentNode: TDocuments | undefined = DocumentsMockState.tree
 
       return params['*'].split('/').map((folderId) => {
@@ -88,7 +88,7 @@ export const FileBreadcrumbs: FC<TProps> = ({ params }) => {
           <li>
             <div className="flex">
               <NavLink
-                to={RoutePaths.DOCUMENTS}
+                to={RoutePaths.REPORTS}
                 className="text-sm font-medium text-gray-500 hover:text-gray-700"
               >
                 Мои документы
