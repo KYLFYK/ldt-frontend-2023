@@ -15,6 +15,7 @@ type TableDataHardTypes =
   | boolean
   | boolean[]
   | Record<string, TableDataSimpleTypes>
+  | null
 type TableDataTypes = TableDataHardTypes | TableDataSimpleTypes
 
 export type TableDataSource<T extends object> = {
@@ -32,5 +33,5 @@ export type TableRow<T extends object, K extends keyof T> = {
   renderFunc?: (
     value: T[K],
     dataItem: TableDataSource<T>
-  ) => string | number | JSX.Element
+  ) => string | number | JSX.Element | null
 }

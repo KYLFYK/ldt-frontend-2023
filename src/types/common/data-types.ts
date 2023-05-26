@@ -10,4 +10,6 @@ export enum CheckoutStatus {
   IN_PROGRESS = 'in-progress',
   PLANNED = 'planned',
   COMPLETED = 'completed',
+  SIGNED = 'signed',
+  ARCHIVE = 'archive',
 }

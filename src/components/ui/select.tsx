@@ -14,7 +14,7 @@ type TProps<T> = {
   onChange?: (option: OptionItem<T>) => void
 }
 
-const optionClassName = ({ active }: { active: boolean }) =>
+export const optionClassName = ({ active }: { active: boolean }) =>
   classNames(
     active ? 'bg-indigo-600 text-white' : 'text-gray-900',
     'relative cursor-default select-none py-2 pl-3 pr-9'

@@ -1,1 +1,1 @@
-export const COMPANY_NAME = 'LDT Front'
+export const COMPANY_NAME = 'MedExpert'

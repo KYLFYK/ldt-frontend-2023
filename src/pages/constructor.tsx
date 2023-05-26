@@ -1,18 +1,20 @@
 import React, { FC, useCallback, useRef, useState } from 'react'
 import ReactFlow, {
-  addEdge, Controls,
+  Controls,
   MiniMap,
   ReactFlowInstance,
   ReactFlowProvider,
+  addEdge,
   useEdgesState,
-  useNodesState
+  useNodesState,
 } from 'reactflow'
-import { NODE_TYPES } from '../nodes/types'
+
+import { FlowMenu } from '../components/flow-menu'
 import { useAppDispatch } from '../ducks'
 import { setApplicationIsInit } from '../ducks/application/actions'
 import { doSomething } from '../ducks/application/reducer'
 import { nodeTypes } from '../nodes'
-import { FlowMenu } from '../components/flow-menu'
+import { NODE_TYPES } from '../nodes/types'
 
 const initNodes = [
   {
@@ -52,7 +54,7 @@ const initEdges = [
 let id = 0
 const getId = () => `dndnode_${id++}`
 
-export const WorkFlows: FC = () => {
+export const Constructor: FC = () => {
   const reactFlowWrapper = useRef<HTMLDivElement>(null)
   const [reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance | null>(null)

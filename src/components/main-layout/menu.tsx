@@ -11,7 +11,7 @@ import {
 import React, { Dispatch, FC, Fragment, SetStateAction, useMemo } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
-import { COMPANY_NAME } from '../../constants/app'
+import { LogoFull } from '../../icons/logo-full'
 import { classNames } from '../../utils/common'
 import { RoutePaths } from '../../utils/routes/route-paths'
 
@@ -72,7 +72,7 @@ export const Menu: FC<TProps> = ({
         name: 'Проверки',
         icon: FolderIcon,
         ...calcHrefAndCurrent({
-          route: RoutePaths.AUDIT,
+          route: RoutePaths.AUDITS,
           pathname,
         }),
       },
@@ -160,11 +160,7 @@ export const Menu: FC<TProps> = ({
                 {/* Sidebar component, swap this element with another sidebar if you like */}
                 <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
                   <div className="flex h-16 shrink-0 items-center">
-                    <img
-                      className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                      alt={COMPANY_NAME}
-                    />
+                    <LogoFull className="h-8 w-auto" />
                   </div>
                   <nav className="flex flex-1 flex-col">
                     <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -254,11 +250,7 @@ export const Menu: FC<TProps> = ({
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-gray-100 px-6 pb-4">
           <div className="flex h-16 shrink-0 items-center">
-            <img
-              className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt={COMPANY_NAME}
-            />
+            <LogoFull className="h-8 w-auto" />
           </div>
           <nav className="flex flex-1 flex-col">
             <ul role="list" className="flex flex-1 flex-col gap-y-7">

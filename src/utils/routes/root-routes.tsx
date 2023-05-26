@@ -3,12 +3,13 @@ import { Route, Routes } from 'react-router-dom'
 
 import { MainLayout } from '../../containers/main-layout'
 import { ReportsLayout } from '../../containers/reports-layout'
+import { Audits } from '../../pages/audits'
+import { Constructor } from '../../pages/constructor'
 import { ForgetPassword } from '../../pages/forget-password'
 import { Home } from '../../pages/home'
 import { Login } from '../../pages/login'
 import { Registration } from '../../pages/registration'
 import { Reports } from '../../pages/reports'
-import { WorkFlows } from '../../pages/workflows'
 import { RoutePaths } from './route-paths'
 
 export const RootRoutes: FC = () => {
@@ -20,8 +21,8 @@ export const RootRoutes: FC = () => {
           <Route index={true} element={<Reports />} />
           <Route path={'*'} element={<Reports />} />
         </Route>
-        <Route path={RoutePaths.AUDIT} element={<WorkFlows />} />
-        <Route path={RoutePaths.CONSTRUCTOR} element={<Home />} />
+        <Route path={RoutePaths.AUDITS} element={<Audits />} />
+        <Route path={RoutePaths.CONSTRUCTOR} element={<Constructor />} />
         <Route path={RoutePaths.GUIDES} element={<Home />} />
       </Route>
       <Route path={RoutePaths.LOGIN} element={<Login />} />

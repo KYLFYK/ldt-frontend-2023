@@ -12,7 +12,7 @@ export const StatItem: FC<TProps> = ({ label, value, className = '' }) => {
   return (
     <div
       className={classNames(
-        'overflow-hidden rounded-lg px-4 py-5 sm:p-6',
+        'overflow-hidden rounded-lg border border-gray-200 px-4 py-5 sm:p-6',
         className
       )}
     >
