@@ -1,6 +1,7 @@
 export enum RoutePaths {
   BASE = '/',
   AUDITS = '/audits',
+  CREATE_AUDIT = '/audit-create',
   AUDIT = '/audit',
   LOGIN = '/login',
   FORGOT_PASSWORD = '/forgot-password',
@@ -19,6 +20,8 @@ export const pathToName: (path: RoutePaths) => string = (path) => {
       return 'Проверки'
     case RoutePaths.AUDIT:
       return 'Проверка'
+    case RoutePaths.CREATE_AUDIT:
+      return 'Создание проверки'
     case RoutePaths.CONSTRUCTOR:
       return 'Конструктор проверок'
     case RoutePaths.GUIDES:
@@ -34,7 +37,7 @@ export const pathToName: (path: RoutePaths) => string = (path) => {
     case RoutePaths.FORGOT_PASSWORD:
       return 'Забыли пароль'
     default:
-      return ''
+      return path
   }
 }
 

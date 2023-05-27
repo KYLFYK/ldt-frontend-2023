@@ -5,6 +5,7 @@ import { NavigateFunction } from 'react-router-dom'
 
 import { SmProgressChart } from '../../components/ui/sm-progress-chart'
 import {
+  AuditStartType,
   IAuditResponsible,
   TAuditListItem,
   TAuditResult,
@@ -32,7 +33,7 @@ export const auditsListRows: (
     renderFunc: (value, dataItem) => (
       <div className="flex flex-col">
         <span className="text-gray-900">
-          {value as string}-{dataItem.num}
+          {value as string}_{String(dataItem.num).padStart(4, '0')}
         </span>
         <span className="text-gray-500">
           {auditTypeToString(dataItem.type)}
@@ -64,21 +65,14 @@ export const auditsListRows: (
       nav(getAuditPath(dataItem.id))
     },
     renderFunc: (value, dataItem) => {
-      if (
-        dataItem.status === CheckoutStatus.COMPLETED ||
-        dataItem.status === CheckoutStatus.SIGNED
-      ) {
-        return dayjs(value as string).format('DD.MM HH:mm')
-      } else {
-        return `${dayjs(dataItem.dateStart as string).format(
-          'DD.MM HH:mm'
-        )} - ${dayjs(value as string).format('DD.MM HH:mm')}`
-      }
+      return `${dayjs(dataItem.dateStart as string).format(
+        'DD.MM HH:mm'
+      )} - ${dayjs(value as string).format('DD.MM HH:mm')}`
     },
   },
   {
-    dataKey: 'cardsCount',
-    label: 'Объем карт',
+    dataKey: 'recommendationsCount',
+    label: 'Объем назначений',
     onClick: (dataItem) => {
       nav(getAuditPath(dataItem.id))
     },
@@ -103,7 +97,7 @@ export const auditsListRows: (
   },
   {
     dataKey: 'responsible',
-    label: 'ответственный',
+    label: 'Ответственный',
     onClick: (dataItem) => {
       nav(getAuditPath(dataItem.id))
     },
@@ -180,5 +174,16 @@ export const auditsListRows: (
         </div>
       )
     },
+  },
+]
+
+export const radioAuditStartTypeOptions: OptionList = [
+  {
+    value: AuditStartType.NOW,
+    label: 'Сейчас',
+  },
+  {
+    value: AuditStartType.BY_DATE,
+    label: 'Выбрать дату',
   },
 ]

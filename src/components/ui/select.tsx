@@ -1,6 +1,7 @@
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import React, { Fragment, HTMLAttributes, useState } from 'react'
+import { FieldInputProps, FieldMetaProps, FormikProps } from 'formik/dist/types'
+import React, { Fragment, HTMLAttributes, useMemo, useState } from 'react'
 
 import { OptionItem, OptionList } from '../../types/common/components-data'
 import { classNames } from '../../utils/common'
@@ -12,6 +13,7 @@ type TProps<T> = {
   defaultValue?: OptionItem<T>
   placeHolder?: string
   onChange?: (option: OptionItem<T>) => void
+  error?: string | null
 }
 
 export const optionClassName = ({ active }: { active: boolean }) =>
@@ -107,4 +109,23 @@ export const Select: <T = string | number>(props: TProps<T>) => JSX.Element = ({
       </Listbox>
     </div>
   )
+}
+
+export function SelectWithFormik<
+  ValuesType,
+  ValueType extends keyof ValuesType
+>(
+  propsData: {
+    field: FieldInputProps<ValueType>
+    form: FormikProps<ValuesType>
+    meta: FieldMetaProps<ValueType>
+  } & TProps<ValueType>
+) {
+  const { field, meta, form, ...props } = propsData
+
+  const error = useMemo(() => {
+    return meta?.error && meta?.touched ? meta.error : null
+  }, [])
+
+  return <Select {...field} {...props} error={error} />
 }

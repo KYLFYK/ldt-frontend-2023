@@ -5,6 +5,7 @@ import { MainLayout } from '../../containers/main-layout'
 import { ReportsLayout } from '../../containers/reports-layout'
 import { Audits } from '../../pages/audits'
 import { Constructor } from '../../pages/constructor'
+import { CreateAudit } from '../../pages/create-audit'
 import { ForgetPassword } from '../../pages/forget-password'
 import { Home } from '../../pages/home'
 import { Login } from '../../pages/login'
@@ -22,6 +23,7 @@ export const RootRoutes: FC = () => {
           <Route path={'*'} element={<Reports />} />
         </Route>
         <Route path={RoutePaths.AUDITS} element={<Audits />} />
+        <Route path={RoutePaths.CREATE_AUDIT} element={<CreateAudit />} />
         <Route path={RoutePaths.CONSTRUCTOR} element={<Constructor />} />
         <Route path={RoutePaths.GUIDES} element={<Home />} />
       </Route>

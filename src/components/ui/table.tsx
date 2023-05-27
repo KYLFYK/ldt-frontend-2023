@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { HTMLAttributes, useCallback, useMemo } from 'react'
 
 import { TableDataSource, TableRow } from '../../types/common/components-data'
 import { classNames } from '../../utils/common'
@@ -8,6 +8,7 @@ type TProps<T extends object> = {
   dataSource: TableDataSource<T>[]
   rows: TableRow<TableDataSource<T>, keyof TableDataSource<T>>[]
   pagination?: boolean
+  thClassName?: HTMLAttributes<HTMLTableHeaderCellElement>['className']
 }
 
 const TableCol: <T extends object>(props: {
@@ -45,6 +46,7 @@ export const Table: <T extends object>(props: TProps<T>) => JSX.Element = ({
   dataSource,
   rows,
   pagination,
+  thClassName,
 }) => {
   return (
     <>
@@ -59,7 +61,10 @@ export const Table: <T extends object>(props: TProps<T>) => JSX.Element = ({
                       <th
                         key={el.dataKey as string}
                         scope="col"
-                        className="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                        className={classNames(
+                          'whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6',
+                          thClassName ?? ''
+                        )}
                       >
                         <span className={el.rowClassName}>{el.label}</span>
                       </th>

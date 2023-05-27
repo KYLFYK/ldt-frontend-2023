@@ -1,9 +1,23 @@
 import { CheckoutStatus } from '../common/data-types'
 import { UserRole } from '../users'
 
+export enum AuditStartType {
+  NOW = 'now',
+  BY_DATE = 'by-date',
+}
+
 export enum AuditType {
   PLANNED = 'planned',
   TARGET = 'target',
+}
+
+export type TAuditDataFilters = {
+  mkbCodes: string[]
+  doctorsId: string[]
+  date?: {
+    start?: string
+    end?: string
+  }
 }
 
 export type TAuditResult = {
@@ -29,7 +43,18 @@ export type TAuditListItem = {
   status: CheckoutStatus
   dateStart: string
   dateEnd: string
-  cardsCount: number
+  recommendationsCount: number
   result: TAuditResult | null
   responsible: IAuditResponsible
+}
+
+export type ICreateAuditForm = {
+  name: string
+  responsible: string
+  startType: AuditStartType
+  startDate?: string
+  endDate: string
+  type: AuditType
+  auditReason: string
+  datasetFilters: TAuditDataFilters
 }

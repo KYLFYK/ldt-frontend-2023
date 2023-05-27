@@ -25,6 +25,7 @@ const calcHrefAndCurrent: (data: {
   pathname: string
   route: RoutePaths
   strongEq?: boolean
+  additionalRoutes?: RoutePaths[]
 }) => {
   href: TNavItem['href']
   current: TNavItem['current']
@@ -32,8 +33,11 @@ const calcHrefAndCurrent: (data: {
   return {
     href: data.route,
     current: data.strongEq
-      ? data.pathname === data.route
-      : data.pathname === data.route || data.pathname.includes(data.route),
+      ? data.pathname === data.route ||
+        !!data.additionalRoutes?.includes(data.pathname as RoutePaths)
+      : data.pathname === data.route ||
+        data.pathname.includes(data.route) ||
+        !!data.additionalRoutes?.includes(data.pathname as RoutePaths),
   }
 }
 
@@ -74,6 +78,7 @@ export const Menu: FC<TProps> = ({
         ...calcHrefAndCurrent({
           route: RoutePaths.AUDITS,
           pathname,
+          additionalRoutes: [RoutePaths.AUDIT, RoutePaths.CREATE_AUDIT],
         }),
       },
       {

@@ -24,6 +24,7 @@ export const AuditsTable: FC = () => {
       rows={rows}
       dataSource={dataSource}
       pagination={false}
+      thClassName={'uppercase'}
     />
   )
 }

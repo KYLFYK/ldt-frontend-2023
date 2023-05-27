@@ -14,6 +14,10 @@ export const Breadcrumbs: FC = () => {
       .map((el) => `/${el}` as RoutePaths)
       .filter((el) => Object.values(RoutePaths).includes(el))
 
+    if (names.length === 1 && names[0] === RoutePaths.CREATE_AUDIT) {
+      names.unshift(RoutePaths.AUDITS)
+    }
+
     return names.map((el, index) => ({
       name: pathToName(el),
       href: el,
