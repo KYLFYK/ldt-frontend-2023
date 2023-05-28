@@ -3,10 +3,12 @@ import React, { FC } from 'react'
 
 import { responsibleOptionsMocks } from '../../mocks/select-options-mocks'
 import { AuditStartType, AuditType, ICreateAuditForm } from '../../types/audits'
+import { auditTypeOptions } from '../../utils/audits'
 import { radioAuditStartTypeOptions } from '../../utils/audits/data-utils'
 import { InputWithFormik } from '../ui/input'
 import { RadioGroupWithFormik } from '../ui/radio-group'
 import { SelectWithFormik } from '../ui/select'
+import { TextAreaWithFormik } from '../ui/text-area'
 
 export type TSubmitAction = (
   values: ICreateAuditForm,
@@ -60,6 +62,28 @@ export const CreateForm: FC<TProps> = ({ handleFinishForm }) => {
           component={RadioGroupWithFormik}
           options={radioAuditStartTypeOptions}
           containerClassName="w-full"
+        />
+        <Field
+          type={'date'}
+          label={'Окончание'}
+          name="endDate"
+          component={InputWithFormik}
+        />
+        <Field
+          type={'text'}
+          label={'Вид проверки'}
+          name="type"
+          component={SelectWithFormik}
+          options={auditTypeOptions}
+          containerClassName="w-full"
+        />
+        <Field
+          type={'text'}
+          label={'Причина проверки'}
+          name="auditReason"
+          component={TextAreaWithFormik}
+          containerClassName="w-full"
+          placeholder="Например, подтверждённая жалоба пациента"
         />
       </div>
     </Formik>

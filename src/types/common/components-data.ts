@@ -3,6 +3,7 @@ import { HTMLAttributes } from 'react'
 export type OptionItem<T = string | number> = {
   value: T
   label: string
+  disabled?: boolean
 }
 
 export type OptionList<T = string | number> = OptionItem<T>[]

@@ -28,6 +28,7 @@ export const Select: <T = string | number>(props: TProps<T>) => JSX.Element = ({
   label,
   defaultValue,
   placeHolder = 'Выберите',
+  error,
 }) => {
   const [current, setCurrent] = useState(defaultValue)
 
@@ -107,6 +108,11 @@ export const Select: <T = string | number>(props: TProps<T>) => JSX.Element = ({
           </>
         )}
       </Listbox>
+      {error && (
+        <p className="mt-2 text-sm text-red-600" id="email-error">
+          {error}
+        </p>
+      )}
     </div>
   )
 }

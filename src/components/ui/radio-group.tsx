@@ -1,8 +1,9 @@
 import { Field } from 'formik'
 import { FieldInputProps, FieldMetaProps, FormikProps } from 'formik/dist/types'
-import React, { FC } from 'react'
+import React, { FC, useMemo } from 'react'
 
 import { OptionItem, OptionList } from '../../types/common/components-data'
+import { classNames } from '../../utils/common'
 
 type TProps = {
   options: OptionList<string>
@@ -32,12 +33,18 @@ export const RadioGroup: FC<TProps> = ({
                 id={option.value as string}
                 name="notification-method"
                 type="radio"
+                disabled={option.disabled}
                 defaultChecked={option.value === defaultValue?.value}
-                className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                className="h-4 w-4 cursor-pointer border-gray-300 text-indigo-600 focus:ring-indigo-600 disabled:cursor-not-allowed disabled:ring-gray-200"
               />
               <label
                 htmlFor={option.value as string}
-                className="ml-3 block text-sm font-medium leading-6 text-gray-900"
+                className={classNames(
+                  'ml-3 block text-sm font-medium leading-6 text-gray-900',
+                  option.disabled
+                    ? 'cursor-not-allowed text-gray-300'
+                    : 'cursor-pointer'
+                )}
               >
                 {option.label}
               </label>
@@ -59,7 +66,11 @@ export function RadioGroupWithFormik<
     meta: FieldMetaProps<ValueType>
   } & TProps
 ) {
-  const { label, subLabel, options, field } = propsData
+  const { label, subLabel, options, field, meta } = propsData
+
+  const error = useMemo(() => {
+    return meta?.error && meta?.touched ? meta.error : null
+  }, [])
 
   return (
     <div>
@@ -73,15 +84,21 @@ export function RadioGroupWithFormik<
           {options.map((option) => (
             <div key={option.value} className="flex items-center">
               <Field
-                className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                className="h-4 w-4 cursor-pointer border-gray-300 text-indigo-600 focus:ring-indigo-600 disabled:cursor-not-allowed disabled:ring-gray-200"
                 type="radio"
                 name={field.name}
                 value={option.value}
                 id={option.value as string}
+                disabled={option.disabled}
               />
               <label
                 htmlFor={option.value as string}
-                className="ml-3 block text-sm font-medium leading-6 text-gray-900"
+                className={classNames(
+                  'ml-3 block text-sm font-medium leading-6 text-gray-900',
+                  option.disabled
+                    ? 'cursor-not-allowed text-gray-300'
+                    : 'cursor-pointer'
+                )}
               >
                 {option.label}
               </label>
@@ -89,6 +106,11 @@ export function RadioGroupWithFormik<
           ))}
         </div>
       </fieldset>
+      {error && (
+        <p className="mt-2 text-sm text-red-600" id="email-error">
+          {error}
+        </p>
+      )}
     </div>
   )
 }

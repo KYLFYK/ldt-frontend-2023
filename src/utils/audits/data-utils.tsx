@@ -185,5 +185,6 @@ export const radioAuditStartTypeOptions: OptionList = [
   {
     value: AuditStartType.BY_DATE,
     label: 'Выбрать дату',
+    disabled: true,
   },
 ]

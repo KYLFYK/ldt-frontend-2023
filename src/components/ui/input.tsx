@@ -28,6 +28,7 @@ export const Input: FC<TInputProps> = ({
   className,
   label,
   additionalLink,
+  error,
 }) => {
   return (
     <div>
@@ -62,6 +63,11 @@ export const Input: FC<TInputProps> = ({
           placeholder="you@example.com"
         />
       </div>
+      {error && (
+        <p className="mt-2 text-sm text-red-600" id="email-error">
+          {error}
+        </p>
+      )}
     </div>
   )
 }
