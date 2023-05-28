@@ -8,7 +8,7 @@ export const Breadcrumbs: FC = () => {
   const { pathname } = useLocation()
 
   const pages = useMemo(() => {
-    const names: RoutePaths[] = pathname
+    let names: RoutePaths[] = pathname
       .split('/')
       .filter(Boolean)
       .map((el) => `/${el}` as RoutePaths)
@@ -16,6 +16,11 @@ export const Breadcrumbs: FC = () => {
 
     if (names.length === 1 && names[0] === RoutePaths.CREATE_AUDIT) {
       names.unshift(RoutePaths.AUDITS)
+    }
+
+    if (names[0] === RoutePaths.AUDIT) {
+      names = []
+      names.push(RoutePaths.AUDITS)
     }
 
     return names.map((el, index) => ({

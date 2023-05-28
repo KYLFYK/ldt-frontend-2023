@@ -3,13 +3,15 @@ import dayjs from 'dayjs'
 import React from 'react'
 import { NavigateFunction } from 'react-router-dom'
 
+import { TAppointTableData } from '../../components/audit/appoints-tab'
 import { SmProgressChart } from '../../components/ui/sm-progress-chart'
 import {
+  AuditResultStatus,
   AuditStartType,
   IAuditResponsible,
   TAuditListItem,
-  TAuditResult,
 } from '../../types/audits'
+import { TAllStats } from '../../types/audits/audit-results'
 import { OptionList, TableRow } from '../../types/common/components-data'
 import { CheckoutStatus } from '../../types/common/data-types'
 import { classNames } from '../common'
@@ -17,9 +19,9 @@ import {
   checkoutStatusToColorClass,
   checkoutStatusToString,
 } from '../common/data-utils'
-import { getAuditPath } from '../routes/route-paths'
+import { getAuditAppointPath, getAuditPath } from '../routes/route-paths'
 import { userRoleToString } from '../users'
-import { auditTypeToString } from './index'
+import { appointStatusToColor, auditTypeToString } from './index'
 
 export const auditsListRows: (
   nav: NavigateFunction
@@ -32,9 +34,7 @@ export const auditsListRows: (
     },
     renderFunc: (value, dataItem) => (
       <div className="flex flex-col">
-        <span className="text-gray-900">
-          {value as string}_{String(dataItem.num).padStart(4, '0')}
-        </span>
+        <span className="text-gray-900">{value as string}</span>
         <span className="text-gray-500">
           {auditTypeToString(dataItem.type)}
         </span>
@@ -71,12 +71,13 @@ export const auditsListRows: (
     },
   },
   {
-    dataKey: 'recommendationsCount',
+    dataKey: 'allStats',
     label: 'Объем назначений',
     onClick: (dataItem) => {
       nav(getAuditPath(dataItem.id))
     },
-    renderFunc: (value) => (value as number).toLocaleString(),
+    renderFunc: (value, dataItem) =>
+      dataItem.allStats.cardsCount.toLocaleString(),
   },
   {
     dataKey: 'result',
@@ -91,7 +92,27 @@ export const auditsListRows: (
       ) {
         return null
       } else {
-        return <SmProgressChart results={value as TAuditResult} />
+        return (
+          <SmProgressChart
+            results={
+              {
+                error:
+                  (dataItem.allStats.cardsCount / 100) *
+                  dataItem.allStats.error,
+                warning:
+                  (dataItem.allStats.cardsCount / 100) *
+                  dataItem.allStats.warning,
+                unchecked:
+                  (dataItem.allStats.cardsCount / 100) *
+                  dataItem.allStats.unchecked,
+                green:
+                  (dataItem.allStats.cardsCount / 100) *
+                  dataItem.allStats.green,
+                cardsCount: dataItem.allStats.cardsCount,
+              } as TAllStats
+            }
+          />
+        )
       }
     },
   },
@@ -186,5 +207,93 @@ export const radioAuditStartTypeOptions: OptionList = [
     value: AuditStartType.BY_DATE,
     label: 'Выбрать дату',
     disabled: true,
+  },
+]
+
+export const averageToResStatus: (avg: number) => AuditResultStatus = (
+  avg: number
+) => {
+  switch (true) {
+    case avg > 90:
+      return AuditResultStatus.SUCCESS
+    case avg > 40:
+      return AuditResultStatus.WARNING
+    default:
+      return AuditResultStatus.DANGER
+  }
+}
+
+export const appointsRows: (
+  nav: NavigateFunction,
+  auditId: string | number
+) => TableRow<TAppointTableData, keyof TAppointTableData>[] = (
+  nav,
+  auditId
+) => [
+  {
+    dataKey: 'status',
+    label: '',
+    renderFunc: (value) => (
+      <span
+        className={classNames(
+          'block h-4 w-4 min-w-min rounded-full',
+          appointStatusToColor(value as AuditResultStatus)
+        )}
+      />
+    ),
+    onClick: (dataItem) => {
+      nav(getAuditAppointPath(auditId, dataItem.id))
+    },
+  },
+  {
+    dataKey: 'patientId',
+    label: 'ID пациента',
+    onClick: (dataItem) => {
+      nav(getAuditAppointPath(auditId, dataItem.id))
+    },
+  },
+  {
+    dataKey: 'gender',
+    label: 'ПОЛ',
+    onClick: (dataItem) => {
+      nav(getAuditAppointPath(auditId, dataItem.id))
+    },
+  },
+  {
+    dataKey: 'birthDate',
+    label: 'дата рождения',
+    renderFunc: (value) => dayjs(value).format('DD.MM.YYYY'),
+    onClick: (dataItem) => {
+      nav(getAuditAppointPath(auditId, dataItem.id))
+    },
+  },
+  {
+    dataKey: 'mkbCode',
+    label: 'КОД МКБ',
+    onClick: (dataItem) => {
+      nav(getAuditAppointPath(auditId, dataItem.id))
+    },
+  },
+  {
+    dataKey: 'mkbName',
+    label: 'Заболевание',
+    onClick: (dataItem) => {
+      nav(getAuditAppointPath(auditId, dataItem.id))
+    },
+  },
+  {
+    dataKey: 'serviceDate',
+    label: 'Дата',
+    renderFunc: (value) => dayjs(value).format('DD.MM.YYYY'),
+    onClick: (dataItem) => {
+      nav(getAuditAppointPath(auditId, dataItem.id))
+    },
+  },
+  {
+    dataKey: 'doctorJobTitle',
+    label: 'Должность',
+    onClick: (dataItem) => {
+      nav(getAuditAppointPath(auditId, dataItem.id))
+    },
   },
 ]

@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 
-import { TAuditResult } from '../../types/audits'
+import { TAllStats } from '../../types/audits/audit-results'
 import { classNames } from '../../utils/common'
 
 const percentToHeightClassName: (percent: number) => string = (percent) => {
@@ -25,7 +25,7 @@ const percentToHeightClassName: (percent: number) => string = (percent) => {
 }
 
 type TProps = {
-  results: TAuditResult
+  results: TAllStats
 }
 
 export const SmProgressChart: FC<TProps> = ({ results }) => {
@@ -34,19 +34,19 @@ export const SmProgressChart: FC<TProps> = ({ results }) => {
       <span
         className={classNames(
           'ml-0.5 w-3 rounded-t-sm bg-green-400',
-          percentToHeightClassName(results.success)
+          percentToHeightClassName(results.green)
         )}
       />
       <span
         className={classNames(
           'ml-0.5 w-3 rounded-t-sm bg-yellow-300',
-          percentToHeightClassName(results.warnings)
+          percentToHeightClassName(results.warning)
         )}
       />
       <span
         className={classNames(
           'ml-0.5 w-3 rounded-t-sm bg-pink-500',
-          percentToHeightClassName(results.errors)
+          percentToHeightClassName(results.error)
         )}
       />
       <span

@@ -3,6 +3,8 @@ import { Route, Routes } from 'react-router-dom'
 
 import { MainLayout } from '../../containers/main-layout'
 import { ReportsLayout } from '../../containers/reports-layout'
+import { Appoint } from '../../pages/appoint'
+import { Audit } from '../../pages/audit'
 import { Audits } from '../../pages/audits'
 import { Constructor } from '../../pages/constructor'
 import { CreateAudit } from '../../pages/create-audit'
@@ -23,6 +25,11 @@ export const RootRoutes: FC = () => {
           <Route path={'*'} element={<Reports />} />
         </Route>
         <Route path={RoutePaths.AUDITS} element={<Audits />} />
+        <Route path={`${RoutePaths.AUDIT}/:auditId`} element={<Audit />} />
+        <Route
+          path={`${RoutePaths.AUDIT}/:auditId/:appointId`}
+          element={<Appoint />}
+        />
         <Route path={RoutePaths.CREATE_AUDIT} element={<CreateAudit />} />
         <Route path={RoutePaths.CONSTRUCTOR} element={<Constructor />} />
         <Route path={RoutePaths.GUIDES} element={<Home />} />

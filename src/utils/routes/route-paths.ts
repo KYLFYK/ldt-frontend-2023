@@ -42,3 +42,7 @@ export const pathToName: (path: RoutePaths) => string = (path) => {
 }
 
 export const getAuditPath = (id: string | number) => `${RoutePaths.AUDIT}/${id}`
+export const getAuditAppointPath = (
+  auditId: string | number,
+  appointId: string | number
+) => `${RoutePaths.AUDIT}/${auditId}/${appointId}`

@@ -8,6 +8,14 @@ export type OptionItem<T = string | number> = {
 
 export type OptionList<T = string | number> = OptionItem<T>[]
 
+export type TabItem = {
+  name: string
+  key: string
+  component: JSX.Element
+  current?: boolean
+}
+export type TabList = TabItem[]
+
 type TableDataSimpleTypes = string | number
 type TableDataHardTypes =
   | number[]

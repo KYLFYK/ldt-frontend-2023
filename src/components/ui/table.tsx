@@ -31,7 +31,7 @@ const TableCol: <T extends object>(props: {
     <td
       key={row.dataKey as string}
       className={classNames(
-        'whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6',
+        'max-w-md py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6',
         row.onClick ? 'cursor-pointer' : '',
         row.colClassName ?? ''
       )}

@@ -4,19 +4,17 @@ import { FileList } from '../ui/file-list'
 import { RadioGroup } from '../ui/radio-group'
 import { UploadFile } from '../ui/upload-file'
 
-export const CheckoutSettings: FC = () => {
-  const [file, setFile] = useState<File | undefined>(undefined)
+type TProps = {
+  file: File | undefined
+  handleFileChange: (e: ChangeEvent<HTMLInputElement>) => void
+  clearFile: () => void
+}
 
-  const handleFileChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setFile(e.target.files[0])
-    }
-  }, [])
-
-  const clearFile = useCallback(() => {
-    setFile(undefined)
-  }, [])
-
+export const CheckoutSettings: FC<TProps> = ({
+  file,
+  handleFileChange,
+  clearFile,
+}) => {
   return (
     <div className="col-span-8 px-5">
       <div className="mb-6 text-xl font-semibold">Объём проверки</div>
