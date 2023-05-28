@@ -10,15 +10,7 @@ import React, {
 } from 'react'
 
 import { BASE_URL } from '../constants/app'
-import { auditPageMockState } from '../mocks/audit-page-mock-state'
 import { TAuditPageResult } from '../types/audits/audit-results'
-
-type TAuditContext = {
-  data: TAuditPageResult[]
-  loaded: boolean
-  loading: boolean
-  error: boolean
-}
 
 const initValue = {
   data: [],

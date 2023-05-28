@@ -67,7 +67,11 @@ export const Audit: FC = () => {
   return (
     <div>
       {currentAudit && (
-        <AuditHeading title={currentAudit.name} status={currentAudit.status} />
+        <AuditHeading
+          title={currentAudit.name}
+          status={currentAudit.status}
+          links={currentAudit.resultDocs}
+        />
       )}
       <Tabs tabs={tabList} containerClassName="mt-4" />
     </div>

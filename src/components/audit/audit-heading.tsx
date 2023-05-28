@@ -2,6 +2,10 @@ import { DocumentArrowDownIcon } from '@heroicons/react/24/solid'
 import React, { FC } from 'react'
 import { NavLink } from 'react-router-dom'
 
+import {
+  TAppointsResult,
+  TAuditPageResult,
+} from '../../types/audits/audit-results'
 import { CheckoutStatus } from '../../types/common/data-types'
 import { classNames } from '../../utils/common'
 import {
@@ -13,9 +17,18 @@ import { RoutePaths, pathToName } from '../../utils/routes/route-paths'
 type TProps = {
   title: string
   status: CheckoutStatus
+  links: TAuditPageResult['resultDocs']
 }
 
-export const AuditHeading: FC<TProps> = ({ title, status }) => {
+export const getLink: (href: string) => string = (href) => {
+  return `http://91.206.14.140:3000/${href
+    .split('/')
+    .filter((el, i) => i !== 1)
+    .filter(Boolean)
+    .join('/')}`
+}
+
+export const AuditHeading: FC<TProps> = ({ title, status, links }) => {
   return (
     <div className="lg:flex lg:items-center lg:justify-between">
       <div className="min-w-0 flex-1">
@@ -48,7 +61,10 @@ export const AuditHeading: FC<TProps> = ({ title, status }) => {
         </div>
       </div>
       <div className="mt-5 flex lg:ml-4 lg:mt-0">
-        <button
+        <a
+          href={getLink(links.xl_href)}
+          download={true}
+          target="_blank"
           type="button"
           className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
         >
@@ -57,9 +73,12 @@ export const AuditHeading: FC<TProps> = ({ title, status }) => {
             aria-hidden="true"
           />
           Скачать XLSX
-        </button>
-        <button
+        </a>
+        <a
+          download={true}
           type="button"
+          target="_blank"
+          href={getLink(links.csv_href)}
           className="ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
         >
           <DocumentArrowDownIcon
@@ -67,7 +86,7 @@ export const AuditHeading: FC<TProps> = ({ title, status }) => {
             aria-hidden="true"
           />
           Скачать CSV
-        </button>
+        </a>
         {/*<button*/}
         {/*  type="button"*/}
         {/*  className="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"*/}
