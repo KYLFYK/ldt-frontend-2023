@@ -1,6 +1,12 @@
 # МедЭксперт
 ## Рекомендуется NodeJS V 14.19.0 + Пакетный менеджер Yarn
 ### [YARN](https://classic.yarnpkg.com/lang/en/docs/install/)
+## Перед запуском и сборкой
+Создайте файл в корне проекта .env, ниже содержимое для базовой работы сервиса.
+```dotenv
+REACT_APP_REMOTE_HOST=http://91.206.14.140:3000
+NODE_ENV=development
+```
 ## Start in dev
 ```bash
 #Install modules
