@@ -14,84 +14,86 @@ import { UserRole } from '../types/users'
 import { RoutePaths } from '../utils/routes/route-paths'
 
 export const CreateAudit: FC = () => {
-  const [isStarted, setIsStarted] = useState(false)
+    const [isStarted, setIsStarted] = useState(false)
 
-  const [file, setFile] = useState<File | undefined>(undefined)
+    const [file, setFile] = useState<File | undefined>(undefined)
 
-  const handleFileChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setFile(e.target.files[0])
-    }
-  }, [])
+    const handleFileChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            setFile(e.target.files[0])
+        }
+    }, [])
 
-  const clearFile = useCallback(() => {
-    setFile(undefined)
-  }, [])
+    const clearFile = useCallback(() => {
+        setFile(undefined)
+    }, [])
 
-  const handleCreate = useCallback(async () => {
-    if (file) {
-      setIsStarted(true)
-      const formData = new FormData()
-      formData.set('file', file)
-      const respFile = await axios.post<{
-        createAt: string
-        fileName: string
-        id: number
-        updateAt: string
-      }>(BASE_URL + '/files-upload', formData)
+    const handleCreate = useCallback(async () => {
+        if (file) {
+            setIsStarted(true)
+            const formData = new FormData()
+            formData.set('file', file)
+            const respFile = await axios.post<{
+                createAt: string
+                fileName: string
+                id: number
+                updateAt: string
+            }>(BASE_URL + '/files-upload', formData)
 
-      const resp = await axios.post(BASE_URL + '/initialize', {
-        name: 'Проверка_' + respFile.data.id,
-        type: AuditType.TARGET,
-        status: CheckoutStatus.COMPLETED,
-        dateStart: dayjs().toISOString(),
-        dateEnd: dayjs().add(10, 'days').toISOString(),
-        responsible: {
-          id: '1',
-          firstName: 'И',
-          lastName: 'Иванов',
-          patronymic: 'И',
-          role: UserRole.EXPERT_DEPUTY,
-        },
-        auditReason: `Проверка на ошибки №` + respFile.data.id,
-        fileId: respFile.data.id,
-      })
+            const resp = await axios.post(BASE_URL + '/initialize', {
+                name: 'Проверка_' + respFile.data.id,
+                type: AuditType.TARGET,
+                status: CheckoutStatus.COMPLETED,
+                dateStart: dayjs().toISOString(),
+                dateEnd: dayjs().add(10, 'days').toISOString(),
+                responsible: {
+                    id: '1',
+                    firstName: 'И',
+                    lastName: 'Иванов',
+                    patronymic: 'И',
+                    role: UserRole.EXPERT_DEPUTY,
+                },
+                auditReason: `Проверка на ошибки №` + respFile.data.id,
+                fileId: respFile.data.id,
+            })
 
-      // setLoaded(false)
-    }
-  }, [file])
+            // setLoaded(false)
+        }
+    }, [file])
 
-  const handleFinishForm = useCallback<TSubmitAction>((values, actions) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2))
-      actions.setSubmitting(false)
-    }, 1000)
-  }, [])
+    const handleFinishForm = useCallback<TSubmitAction>((values, actions) => {
+        setTimeout(() => {
+            alert(JSON.stringify(values, null, 2))
+            actions.setSubmitting(false)
+        }, 1000)
+    }, [])
 
-  return (
-    <div className="w-full">
-      {!isStarted && <AuditsCreateHeading handleCreate={handleCreate} />}
-      <div className="grid grid-cols-12 gap-5 divide-x">
-        {isStarted ? (
-          <div className="col-span-full flex h-96 items-center justify-center">
-            <InfoAlert
-              text="Проводим аудит назначений"
-              subText="Примерное время ожидания - 8 минут"
-              detailsText="К списку проверок"
-              detailsHref={RoutePaths.AUDITS}
-            />
-          </div>
-        ) : (
-          <>
-            <AuditMainParamsForm handleFinishForm={handleFinishForm} />
-            <CheckoutSettings
-              file={file}
-              clearFile={clearFile}
-              handleFileChange={handleFileChange}
-            />
-          </>
-        )}
-      </div>
-    </div>
-  )
+    return (
+        <div className="w-full">
+            {!isStarted && <AuditsCreateHeading handleCreate={handleCreate} />}
+            <div className="grid grid-cols-12 gap-5 divide-x">
+                {isStarted ? (
+                    <div className="col-span-full flex h-96 items-center justify-center">
+                        <InfoAlert
+                            text="Проводим аудит назначений"
+                            subText="Примерное время ожидания - 8 минут"
+                            detailsText="К списку проверок"
+                            detailsHref={RoutePaths.AUDITS}
+                        />
+                    </div>
+                ) : (
+                    <>
+                        <AuditMainParamsForm
+                            handleFinishForm={handleFinishForm}
+                        />
+                        <CheckoutSettings
+                            file={file}
+                            clearFile={clearFile}
+                            handleFileChange={handleFileChange}
+                        />
+                    </>
+                )}
+            </div>
+        </div>
+    )
 }

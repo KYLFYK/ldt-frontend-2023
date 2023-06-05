@@ -1,3 +1,3 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction } from '@reduxjs/toolkit'
 
-export const setApplicationIsInit = createAction<boolean>('app/set/isInit');
+export const setApplicationIsInit = createAction<boolean>('app/set/isInit')

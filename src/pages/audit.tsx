@@ -15,89 +15,89 @@ import { useCurrentAudit } from '../ducks/audits/current/selectors'
 import { TabList } from '../types/common/components-data'
 
 export const Audit: FC = () => {
-  const dispatch = useAppDispatch()
-  const params = useParams<{
-    auditId: string
-  }>()
+    const dispatch = useAppDispatch()
+    const params = useParams<{
+        auditId: string
+    }>()
 
-  const auditListData = useAuditsSelector()
-  const { loading, error, loaded, data } = useCurrentAudit()
+    const auditListData = useAuditsSelector()
+    const { loading, error, loaded, data } = useCurrentAudit()
 
-  const tabList: TabList = useMemo(() => {
-    if (loaded && !loading && data) {
-      return [
-        {
-          name: 'Основная информация',
-          key: 'main_info',
-          component: (
-            <>
-              {data && (
-                <MainInfoTab
-                  dateStart={data.dateStart}
-                  dateEnd={data.dateEnd}
-                  auditReason={data.auditReason}
-                  auditType={data.type}
-                  responsible={data.responsible}
+    const tabList: TabList = useMemo(() => {
+        if (loaded && !loading && data) {
+            return [
+                {
+                    name: 'Основная информация',
+                    key: 'main_info',
+                    component: (
+                        <>
+                            {data && (
+                                <MainInfoTab
+                                    dateStart={data.dateStart}
+                                    dateEnd={data.dateEnd}
+                                    auditReason={data.auditReason}
+                                    auditType={data.type}
+                                    responsible={data.responsible}
+                                />
+                            )}
+                        </>
+                    ),
+                },
+                {
+                    name: 'Назначения',
+                    key: 'appointment',
+                    component: <>{data && <AppointsTab />}</>,
+                },
+                {
+                    name: 'Отчёты',
+                    key: 'reports',
+                    component: <AuditReports />,
+                },
+            ]
+        } else return []
+    }, [data])
+
+    useEffect(() => {
+        if (
+            (!loaded && !error && !loading && auditListData.loaded) ||
+            (!loading &&
+                !error &&
+                data &&
+                data.id !== Number(params.auditId) &&
+                auditListData.loaded)
+        ) {
+            dispatch(
+                loadCurrentAudit({
+                    id: Number(params.auditId),
+                })
+            )
+        }
+    }, [loaded, data, error, params, loading, auditListData.loaded])
+
+    return (
+        <div className="w-full">
+            {loaded && data && !loading && !error && !auditListData.loading && (
+                <Fragment>
+                    <AuditHeading
+                        title={data.name}
+                        status={data.status}
+                        links={data.resultDocs}
+                    />
+                    <Tabs tabs={tabList} containerClassName="mt-4" />
+                </Fragment>
+            )}
+            {(loading || auditListData.loading) && (
+                <div className="flex h-80 w-full items-center justify-center">
+                    <Loader />
+                </div>
+            )}
+            {error && auditListData.loading && (
+                <EmptyState
+                    title={'Не найдена проверка'}
+                    description={'Попробуйте поискать проверку в списке'}
+                    containerClassName="w-full"
                 />
-              )}
-            </>
-          ),
-        },
-        {
-          name: 'Назначения',
-          key: 'appointment',
-          component: <>{data && <AppointsTab />}</>,
-        },
-        {
-          name: 'Отчёты',
-          key: 'reports',
-          component: <AuditReports />,
-        },
-      ]
-    } else return []
-  }, [data])
-
-  useEffect(() => {
-    if (
-      (!loaded && !error && !loading && auditListData.loaded) ||
-      (!loading &&
-        !error &&
-        data &&
-        data.id !== Number(params.auditId) &&
-        auditListData.loaded)
-    ) {
-      dispatch(
-        loadCurrentAudit({
-          id: Number(params.auditId),
-        })
-      )
-    }
-  }, [loaded, data, error, params, loading, auditListData.loaded])
-
-  return (
-    <div className="w-full">
-      {loaded && data && !loading && !error && !auditListData.loading && (
-        <Fragment>
-          <AuditHeading
-            title={data.name}
-            status={data.status}
-            links={data.resultDocs}
-          />
-          <Tabs tabs={tabList} containerClassName="mt-4" />
-        </Fragment>
-      )}
-      {(loading || auditListData.loading) && (
-        <div className="flex h-80 w-full items-center justify-center">
-          <Loader />
+            )}
         </div>
-      )}
-      {error && auditListData.loading && (
-        <EmptyState
-          title={'Не найдена проверка'}
-          description={'Попробуйте поискать проверку в списке'}
-          containerClassName="w-full"
-        />
-      )}
-    </div>
-  )
+    )
 }

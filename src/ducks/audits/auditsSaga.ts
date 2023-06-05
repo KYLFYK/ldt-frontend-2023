@@ -6,6 +6,6 @@ import { loadAllWorker } from './workers/loadAllWorker'
 import { loadCurrentWorker } from './workers/loadCurrentWorker'
 
 export function* auditsSaga(): Generator {
-  yield takeLeading(loadAllAuditsAction, loadAllWorker)
-  yield takeLeading(loadCurrentAudit, loadCurrentWorker)
+    yield takeLeading(loadAllAuditsAction, loadAllWorker)
+    yield takeLeading(loadCurrentAudit, loadCurrentWorker)
 }

@@ -4,6 +4,6 @@ import { auditsListReducer } from './audits-list/slice'
 import { currentAuditReducer } from './current/slice'
 
 export const auditsReducer = combineReducers({
-  list: auditsListReducer,
-  current: currentAuditReducer,
+    list: auditsListReducer,
+    current: currentAuditReducer,
 })

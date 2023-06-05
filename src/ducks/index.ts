@@ -10,12 +10,12 @@ import { rootSaga } from './rootSaga'
 const sagaMiddleware = createSagaMiddleware()
 
 export const store = configureStore({
-  reducer: {
-    application: applicationReducer,
-    audits: auditsReducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(sagaMiddleware),
+    reducer: {
+        application: applicationReducer,
+        audits: auditsReducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(sagaMiddleware),
 })
 
 sagaMiddleware.run(rootSaga)
@@ -27,5 +27,5 @@ export const useAppDispatch: () => Dispatch = () => useDispatch<AppDispatch>()
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 export function selectState<T>(selector: (s: RootState) => T): SelectEffect {
-  return select(selector)
+    return select(selector)
 }

@@ -13,13 +13,13 @@ const container = document.getElementById('root')!
 const root = createRoot(container)
 
 root.render(
-  <StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <Services>
-          <RootRoutes />
-        </Services>
-      </Provider>
-    </BrowserRouter>
-  </StrictMode>
+    <StrictMode>
+        <BrowserRouter>
+            <Provider store={store}>
+                <Services>
+                    <RootRoutes />
+                </Services>
+            </Provider>
+        </BrowserRouter>
+    </StrictMode>
 )

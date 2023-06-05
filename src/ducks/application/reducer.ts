@@ -1,27 +1,28 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { setApplicationIsInit } from './actions';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+
+import { setApplicationIsInit } from './actions'
 
 export interface IApplication {
-  isInit: boolean;
+    isInit: boolean
 }
 
 const applicationState: IApplication = {
-  isInit: false,
-};
+    isInit: false,
+}
 
 const applicationSlice = createSlice({
-  name: 'application',
-  initialState: applicationState as IApplication,
-  reducers: {
-    doSomething: (state, { payload }: PayloadAction<boolean>) => {
-      state.isInit = payload;
+    name: 'application',
+    initialState: applicationState as IApplication,
+    reducers: {
+        doSomething: (state, { payload }: PayloadAction<boolean>) => {
+            state.isInit = payload
+        },
     },
-  },
-  extraReducers: (builder) =>
-    builder.addCase(setApplicationIsInit, (state, action) => {
-      state.isInit = action.payload;
-    }),
-});
+    extraReducers: (builder) =>
+        builder.addCase(setApplicationIsInit, (state, action) => {
+            state.isInit = action.payload
+        }),
+})
 
-export const { doSomething } = applicationSlice.actions;
-export const applicationReducer = applicationSlice.reducer;
+export const { doSomething } = applicationSlice.actions
+export const applicationReducer = applicationSlice.reducer

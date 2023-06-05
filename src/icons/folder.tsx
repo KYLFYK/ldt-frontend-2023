@@ -4,7 +4,7 @@ import React, { FC } from 'react'
 import { TIconProps } from './index'
 
 const FolderIcon: FC<TIconProps> = (props) => {
-  return <LibFolderIcon {...props} />
+    return <LibFolderIcon {...props} />
 }
 
 export default FolderIcon

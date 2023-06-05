@@ -1,3 +1,3 @@
-import { RootState } from '../index';
+import { RootState } from '../index'
 
-export const useIsInitSelector = (state: RootState) => state.application.isInit;
+export const useIsInitSelector = (state: RootState) => state.application.isInit
