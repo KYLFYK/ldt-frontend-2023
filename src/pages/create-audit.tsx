@@ -8,14 +8,12 @@ import { CheckoutSettings } from '../components/audits-create/checkout-settings'
 import { TSubmitAction } from '../components/audits-create/create-form'
 import { InfoAlert } from '../components/ui/info-alert'
 import { BASE_URL } from '../constants/app'
-import { useAuditContext } from '../contexts/audit-context'
 import { AuditType } from '../types/audits'
 import { CheckoutStatus } from '../types/common/data-types'
 import { UserRole } from '../types/users'
 import { RoutePaths } from '../utils/routes/route-paths'
 
 export const CreateAudit: FC = () => {
-  const { setLoaded } = useAuditContext()
   const [isStarted, setIsStarted] = useState(false)
 
   const [file, setFile] = useState<File | undefined>(undefined)
@@ -35,7 +33,7 @@ export const CreateAudit: FC = () => {
       setIsStarted(true)
       const formData = new FormData()
       formData.set('file', file)
-      const resp_file = await axios.post<{
+      const respFile = await axios.post<{
         createAt: string
         fileName: string
         id: number
@@ -43,7 +41,7 @@ export const CreateAudit: FC = () => {
       }>(BASE_URL + '/files-upload', formData)
 
       const resp = await axios.post(BASE_URL + '/initialize', {
-        name: 'Проверка_' + resp_file.data.id,
+        name: 'Проверка_' + respFile.data.id,
         type: AuditType.TARGET,
         status: CheckoutStatus.COMPLETED,
         dateStart: dayjs().toISOString(),
@@ -55,11 +53,11 @@ export const CreateAudit: FC = () => {
           patronymic: 'И',
           role: UserRole.EXPERT_DEPUTY,
         },
-        auditReason: `Проверка на ошибки №` + resp_file.data.id,
-        fileId: resp_file.data.id,
+        auditReason: `Проверка на ошибки №` + respFile.data.id,
+        fileId: respFile.data.id,
       })
 
-      setLoaded(false)
+      // setLoaded(false)
     }
   }, [file])
 

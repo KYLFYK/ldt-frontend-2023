@@ -1,34 +1,61 @@
 import { HomeIcon } from '@heroicons/react/20/solid'
 import React, { FC, useMemo } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation, useParams } from 'react-router-dom'
 
-import { RoutePaths, pathToName } from '../../utils/routes/route-paths'
+import {
+  RoutePaths,
+  paramNameToName,
+  pathToName,
+} from '../../utils/routes/route-paths'
 
 export const Breadcrumbs: FC = () => {
+  const params = useParams<Record<string, string>>()
   const { pathname } = useLocation()
-
   const pages = useMemo(() => {
-    let names: RoutePaths[] = pathname
+    const res: { name: string; href: string; current: boolean }[] = []
+    let names: (RoutePaths | string)[] = pathname
       .split('/')
       .filter(Boolean)
       .map((el) => `/${el}` as RoutePaths)
       .filter((el) => Object.values(RoutePaths).includes(el))
 
-    if (names.length === 1 && names[0] === RoutePaths.CREATE_AUDIT) {
-      names.unshift(RoutePaths.AUDITS)
+    if (names.length === 1 && names[0] === RoutePaths.AUDIT) {
+      names = names.filter((el) => el !== RoutePaths.AUDIT)
+      res.push({
+        name: pathToName(RoutePaths.AUDITS) as string,
+        current: false,
+        href: RoutePaths.AUDITS,
+      })
     }
 
-    if (names[0] === RoutePaths.AUDIT) {
-      names = []
-      names.push(RoutePaths.AUDITS)
+    const paramsKeys: string[] = Object.keys(params)
+
+    res.push(
+      ...names.map((el, index) => ({
+        name: pathToName(el as RoutePaths) ?? '',
+        href: pathname.split('/').splice(0, index).join('/') + el,
+        current: index === names.length - 1,
+      }))
+    )
+
+    if (paramsKeys.length > 0) {
+      paramsKeys.forEach((pat, i) => {
+        let pathn = res[res.length - 1].href + '/' + params[pat]
+
+        if (pat === 'auditId') {
+          pathn = RoutePaths.AUDIT + '/' + params[pat]
+        }
+
+        res.push({
+          name: paramNameToName(pat),
+          current: i === names.length,
+          href: pathn,
+        })
+      })
     }
 
-    return names.map((el, index) => ({
-      name: pathToName(el),
-      href: el,
-      current: index === names.length - 1,
-    }))
-  }, [pathname])
+    return res
+  }, [pathname, params])
 
   if (pathname === RoutePaths.BASE) {
     return null

@@ -6,3 +6,10 @@ export type TMedia = {
   mimeType: string
   updateAt: string
 }
+
+export type TBaseSagaPayload =
+  | {
+      errorCallback?: () => void
+      successCallback?: () => void
+    }
+  | undefined

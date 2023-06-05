@@ -28,6 +28,8 @@
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.11.2",
     "reactflow": "^11.7.1",
+    "redux-saga": "^1.2.3",
+    "saga": "^4.0.0-alpha",
     "typescript": "^4.8.2",
     "yup": "^1.2.0"
   },
@@ -45,6 +47,7 @@
     "babel-loader": "^8.2.5",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.3",
+    "dotenv": "^16.0.3",
     "html-loader": "^4.1.0",
     "html-webpack-plugin": "^5.5.0",
     "postcss": "^8.4.23",

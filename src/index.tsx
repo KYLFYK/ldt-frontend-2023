@@ -5,8 +5,8 @@ import { BrowserRouter } from 'react-router-dom'
 
 import './input.css'
 
-import { AuditContext } from './contexts/audit-context'
 import { store } from './ducks'
+import { Services } from './services'
 import { RootRoutes } from './utils/routes/root-routes'
 
 const container = document.getElementById('root')!
@@ -15,11 +15,11 @@ const root = createRoot(container)
 root.render(
   <StrictMode>
     <BrowserRouter>
-      <AuditContext>
-        <Provider store={store}>
+      <Provider store={store}>
+        <Services>
           <RootRoutes />
-        </Provider>
-      </AuditContext>
+        </Services>
+      </Provider>
     </BrowserRouter>
   </StrictMode>
 )

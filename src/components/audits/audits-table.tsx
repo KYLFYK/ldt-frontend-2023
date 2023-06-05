@@ -1,41 +1,46 @@
 import React, { FC, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useAuditContext } from '../../contexts/audit-context'
 import { TAuditListItem } from '../../types/audits'
-import { TAppointsResult } from '../../types/audits/audit-results'
-import { TableDataSource } from '../../types/common/components-data'
+import { TAuditPageResult } from '../../types/audits/audit-results'
+import {
+  TPaginationData,
+  TableDataSource,
+} from '../../types/common/components-data'
 import { auditsListRows } from '../../utils/audits/data-utils'
 import { Table } from '../ui/table'
 
-export const AuditsTable: FC = () => {
+type Props = {
+  pagination: TPaginationData
+  currentPage: TAuditPageResult[]
+}
+
+export const AuditsTable: FC<Props> = ({ pagination, currentPage }) => {
   const navigate = useNavigate()
 
-  const { data } = useAuditContext()
-
-  const dataSource: TableDataSource<TAuditListItem>[] = useMemo(() => {
-    return data.map((el) => ({
+  const dataSource: TableDataSource<any>[] = useMemo(() => {
+    return currentPage.map((el) => ({
       name: el.name,
       id: el.id,
       type: el.type,
       status: el.status,
       dateStart: el.dateStart,
       dateEnd: el.dateEnd,
-      result: el.result as TAppointsResult[],
+      result: el.result,
       responsible: el.responsible,
       auditReason: el.auditReason,
       allStats: el.allStats,
       key: el.id,
     }))
-  }, [data])
+  }, [currentPage])
 
   const rows = useMemo(() => auditsListRows(navigate), [])
 
   return (
     <Table<TableDataSource<TAuditListItem>>
       rows={rows}
-      dataSource={dataSource}
-      pagination={false}
+      dataSource={dataSource as any}
+      pagination={pagination}
       thClassName={'uppercase'}
     />
   )

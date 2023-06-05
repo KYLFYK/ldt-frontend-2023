@@ -1,6 +1,6 @@
 import { CheckoutStatus } from '../common/data-types'
 import { UserRole } from '../users'
-import { TAllStats, TAppointsResult } from './audit-results'
+import { TAllStats, TAppointsResult, TAuditPageResult } from './audit-results'
 
 export enum AuditStartType {
   NOW = 'now',
@@ -17,6 +17,25 @@ export enum AuditResultStatus {
   WARNING = 'WARNING',
   DANGER = 'DANGER',
   UNCHECKED = 'UNCHECKED',
+}
+
+export enum AuditStatusNum {
+  SUCCESS = 12,
+  WARNING = 12,
+  DANGER = 12,
+  UNCHECKED = 0,
+}
+
+export enum AuditAverageNum {
+  SUCCESS = 90,
+  WARNING = 40,
+  DANGER = 0,
+}
+
+export enum AuditScoreNum {
+  SUCCESS = 70,
+  WARNING = 40,
+  DANGER = 0,
 }
 
 export type TAuditDataFilters = {
@@ -44,16 +63,17 @@ export type IAuditResponsible = {
 }
 
 export type TAuditListItem = {
-  name: string
-  id: string | number
-  type: AuditType
-  status: CheckoutStatus
-  dateStart: string
-  dateEnd: string
   result: TAppointsResult[]
-  responsible: IAuditResponsible
   auditReason: string
+  dateStart: string
+  responsible: IAuditResponsible
+  name: string
   allStats: TAllStats
+  id: string | number
+  dateEnd: string
+  type: AuditType
+  key: string | number
+  status: CheckoutStatus
 }
 
 export type ICreateAuditForm = {

@@ -44,3 +44,16 @@ export type TableRow<T extends object, K extends keyof T> = {
     dataItem: TableDataSource<T>
   ) => string | number | JSX.Element | null
 }
+
+export type TPagination = {
+  onPageCount: number
+  currentPage: number
+  pagesCount: number
+  itemsCount: number
+}
+
+export type TPaginationData = TPagination & {
+  handleNext: () => void
+  handlePrev: () => void
+  handleSelect: (num: number) => void
+}

@@ -1,20 +1,27 @@
-import React, { FC, useMemo } from 'react'
+import React, { FC, Fragment, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useAuditContext } from '../../contexts/audit-context'
+import { useAppDispatch } from '../../ducks'
+import { useAuditsSelector } from '../../ducks/audits/audits-list/selectors'
+import { setPageSelected } from '../../ducks/audits/audits-list/slice'
 import { TAuditListItem } from '../../types/audits'
 import { TAppointsResult } from '../../types/audits/audit-results'
-import { TableDataSource } from '../../types/common/components-data'
+import {
+  TPaginationData,
+  TableDataSource,
+} from '../../types/common/components-data'
 import { auditsListRows } from '../../utils/audits/data-utils'
+import { EmptyState } from '../ui/empty-state'
+import { Loader } from '../ui/loader'
 import { Table } from '../ui/table'
 
 export const DashboardCheckoutsTable: FC = () => {
+  const dispatch = useAppDispatch()
+  const { loading, currentPage, paginationData } = useAuditsSelector()
   const navigate = useNavigate()
 
-  const { data } = useAuditContext()
-
-  const dataSource: TableDataSource<TAuditListItem>[] = useMemo(() => {
-    return data.map((el) => ({
+  const dataSource: any = useMemo(() => {
+    return currentPage.map((el) => ({
       name: el.name,
       id: el.id,
       type: el.type,
@@ -27,9 +34,60 @@ export const DashboardCheckoutsTable: FC = () => {
       allStats: el.allStats,
       key: el.id,
     }))
-  }, [data])
+  }, [currentPage])
 
   const rows = useMemo(() => auditsListRows(navigate), [])
 
-  return <Table<TAuditListItem> dataSource={dataSource} rows={rows} />
+  const pagination: TPaginationData = useMemo(() => {
+    return {
+      ...paginationData,
+      handleNext: () => {
+        dispatch(
+          setPageSelected({
+            page: paginationData.currentPage + 1,
+          })
+        )
+      },
+      handlePrev: () => {
+        dispatch(
+          setPageSelected({
+            page: paginationData.currentPage - 1,
+          })
+        )
+      },
+      handleSelect: (num) => {
+        dispatch(
+          setPageSelected({
+            page: num,
+          })
+        )
+      },
+    }
+  }, [paginationData])
+
+  return (
+    <Fragment>
+      {loading ? (
+        <div className="flex h-80 w-full items-center justify-center">
+          <Loader />
+        </div>
+      ) : (
+        <>
+          {currentPage.length > 0 ? (
+            <Table<TAuditListItem>
+              dataSource={dataSource as TableDataSource<TAuditListItem>[]}
+              rows={rows}
+              pagination={pagination}
+            />
+          ) : (
+            <EmptyState
+              containerClassName="w-full"
+              title={'Записи отсутствуют'}
+              description={'По необходимым параметрам записей не найдено'}
+            />
+          )}
+        </>
+      )}
+    </Fragment>
+  )
 }

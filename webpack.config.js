@@ -3,10 +3,23 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const fs = require('fs')
 const postcss = require('postcss')
 const atImport = require('postcss-import')
+const webpack = require('webpack')
+
+require('dotenv').config({ path: './.env' })
 
 const plugins = [
   new HtmlWebpackPlugin({
     template: path.join(__dirname, 'src', 'index.html'),
+  }),
+  new webpack.DefinePlugin({
+    process: {
+      env: {
+        REACT_APP_REMOTE_HOST: JSON.stringify(
+          process.env.REACT_APP_REMOTE_HOST
+        ),
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      },
+    },
   }),
 ]
 

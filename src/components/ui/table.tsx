@@ -1,13 +1,17 @@
 import React, { HTMLAttributes, useCallback, useMemo } from 'react'
 
-import { TableDataSource, TableRow } from '../../types/common/components-data'
+import {
+  TPaginationData,
+  TableDataSource,
+  TableRow,
+} from '../../types/common/components-data'
 import { classNames } from '../../utils/common'
 import { Pagination } from './pagination'
 
 type TProps<T extends object> = {
   dataSource: TableDataSource<T>[]
   rows: TableRow<TableDataSource<T>, keyof TableDataSource<T>>[]
-  pagination?: boolean
+  pagination?: false | TPaginationData
   thClassName?: HTMLAttributes<HTMLTableHeaderCellElement>['className']
 }
 
@@ -42,12 +46,9 @@ const TableCol: <T extends object>(props: {
   )
 }
 
-export const Table: <T extends object>(props: TProps<T>) => JSX.Element = ({
-  dataSource,
-  rows,
-  pagination,
-  thClassName,
-}) => {
+export const Table: <T extends object>(
+  props: TProps<T>
+) => JSX.Element | null = ({ dataSource, rows, pagination, thClassName }) => {
   return (
     <>
       <div className="mt-8 flow-root">
@@ -92,7 +93,9 @@ export const Table: <T extends object>(props: TProps<T>) => JSX.Element = ({
           </div>
         </div>
       </div>
-      {pagination && <Pagination currentPage={1} pages={[1, 2, 3, 4, 5, 6]} />}
+      {pagination && pagination.pagesCount > 1 && (
+        <Pagination {...pagination} />
+      )}
     </>
   )
 }

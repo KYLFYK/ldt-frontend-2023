@@ -6,6 +6,7 @@ import { NavigateFunction } from 'react-router-dom'
 import { TAppointTableData } from '../../components/audit/appoints-tab'
 import { SmProgressChart } from '../../components/ui/sm-progress-chart'
 import {
+  AuditAverageNum,
   AuditResultStatus,
   AuditStartType,
   IAuditResponsible,
@@ -97,16 +98,16 @@ export const auditsListRows: (
             results={
               {
                 error:
-                  (dataItem.allStats.cardsCount / 100) *
+                  (100 / dataItem.allStats.cardsCount) *
                   dataItem.allStats.error,
                 warning:
-                  (dataItem.allStats.cardsCount / 100) *
+                  (100 / dataItem.allStats.cardsCount) *
                   dataItem.allStats.warning,
                 unchecked:
-                  (dataItem.allStats.cardsCount / 100) *
+                  (100 / dataItem.allStats.cardsCount) *
                   dataItem.allStats.unchecked,
                 green:
-                  (dataItem.allStats.cardsCount / 100) *
+                  (100 / dataItem.allStats.cardsCount) *
                   dataItem.allStats.green,
                 cardsCount: dataItem.allStats.cardsCount,
               } as TAllStats
@@ -214,9 +215,9 @@ export const averageToResStatus: (avg: number) => AuditResultStatus = (
   avg: number
 ) => {
   switch (true) {
-    case avg > 90:
+    case avg >= AuditAverageNum.SUCCESS:
       return AuditResultStatus.SUCCESS
-    case avg > 40:
+    case avg >= AuditAverageNum.WARNING:
       return AuditResultStatus.WARNING
     default:
       return AuditResultStatus.DANGER
@@ -244,6 +245,10 @@ export const appointsRows: (
     onClick: (dataItem) => {
       nav(getAuditAppointPath(auditId, dataItem.id))
     },
+  },
+  {
+    dataKey: 'result',
+    label: '',
   },
   {
     dataKey: 'patientId',

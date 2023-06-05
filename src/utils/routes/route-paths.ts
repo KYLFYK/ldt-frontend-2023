@@ -12,7 +12,7 @@ export enum RoutePaths {
   PROFILE = '/profile',
 }
 
-export const pathToName: (path: RoutePaths) => string = (path) => {
+export const pathToName: (path: RoutePaths) => string | undefined = (path) => {
   switch (path) {
     case RoutePaths.BASE:
       return 'Главная'
@@ -37,8 +37,16 @@ export const pathToName: (path: RoutePaths) => string = (path) => {
     case RoutePaths.FORGOT_PASSWORD:
       return 'Забыли пароль'
     default:
-      return path
+      return undefined
   }
+}
+
+export const paramNameToName: (paramKey: string) => string = (st) => {
+  const resObj: Record<string, string> = {
+    ['auditId']: 'Проверка',
+    ['appointId']: 'Назначение',
+  }
+  return resObj[st as keyof typeof resObj]
 }
 
 export const getAuditPath = (id: string | number) => `${RoutePaths.AUDIT}/${id}`
