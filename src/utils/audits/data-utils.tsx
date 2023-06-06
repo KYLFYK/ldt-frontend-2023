@@ -267,7 +267,7 @@ export const appointsRows: (
     {
         dataKey: 'birthDate',
         label: 'дата рождения',
-        renderFunc: (value) => dayjs(value).format('DD.MM.YYYY'),
+        renderFunc: (value) => dayjs(value, 'DD.MM.YYYY').format('DD.MM.YYYY'),
         onClick: (dataItem) => {
             nav(getAuditAppointPath(auditId, dataItem.id))
         },
@@ -289,7 +289,7 @@ export const appointsRows: (
     {
         dataKey: 'serviceDate',
         label: 'Дата',
-        renderFunc: (value) => dayjs(value).format('DD.MM.YYYY'),
+        renderFunc: (value) => dayjs(value, 'DD.MM.YYYY').format('DD.MM.YYYY'),
         onClick: (dataItem) => {
             nav(getAuditAppointPath(auditId, dataItem.id))
         },

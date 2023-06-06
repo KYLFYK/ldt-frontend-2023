@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
 import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
@@ -12,6 +13,8 @@ import { RootRoutes } from './utils/routes/root-routes'
 
 // tslint:disable-next-line:no-var-requires
 require('dayjs/locale/ru')
+
+dayjs.extend(customParseFormat)
 
 dayjs.locale('ru')
 
