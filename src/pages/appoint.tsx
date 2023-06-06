@@ -1,7 +1,9 @@
 import React, { FC, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 
+import { AppointMaybe } from '../components/appoint/appoint-maybe'
 import { EmptyState } from '../components/ui/empty-state'
+import { Loader } from '../components/ui/loader'
 import { useAppDispatch } from '../ducks'
 import { useAuditsSelector } from '../ducks/audits/audits-list/selectors'
 import { loadCurrentAudit } from '../ducks/audits/current/actions'
@@ -39,9 +41,27 @@ export const Appoint: FC = () => {
         ) as TAppointsResult
     }, [data, params, loaded])
 
+    const regList = useMemo(
+        () =>
+            selectedAppoint?.result?.list.map((el) => {
+                return new RegExp(
+                    el.actualRecommendation
+                        .split(' ')
+                        .map((str) => `(${str.toLowerCase()})`)
+                        .join('|'),
+                    'g'
+                )
+            }) ?? [],
+        [selectedAppoint]
+    )
+
     return (
         <div className="flex w-full items-center justify-center">
-            {(loading || listData.loading) && <span>Loading</span>}
+            {(loading || listData.loading) && (
+                <div className="flex h-80 w-full items-center justify-center">
+                    <Loader />
+                </div>
+            )}
             {loaded &&
                 !(loading || listData.loading) &&
                 selectedAppoint &&
@@ -88,73 +108,12 @@ export const Appoint: FC = () => {
                                 {selectedAppoint?.result ? (
                                     <>
                                         {selectedAppoint.result.list.map(
-                                            (el) => (
-                                                <span
-                                                    className="flex gap-4 text-sm text-gray-800"
-                                                    key={
-                                                        el.actualRecommendation
-                                                    }
-                                                >
-                                                    {['0', '1', '2'].map(
-                                                        (conItem, index) => (
-                                                            <div key={index}>
-                                                                <span>
-                                                                    {el.conjunction[
-                                                                        (index +
-                                                                            1) as
-                                                                            | 1
-                                                                            | 2
-                                                                            | 3
-                                                                    ].mcbRecommendation.trim()
-                                                                        .length >
-                                                                    0
-                                                                        ? el.conjunction[
-                                                                              (index +
-                                                                                  1) as
-                                                                                  | 1
-                                                                                  | 2
-                                                                                  | 3
-                                                                          ].mcbRecommendation.trim()
-                                                                        : 'Не найдено' ??
-                                                                          'Не найдено'}
-                                                                </span>{' '}
-                                                                |{' '}
-                                                                <span
-                                                                    className={classNames(
-                                                                        appointStatusToColor(
-                                                                            scoreNumToStatus(
-                                                                                Number(
-                                                                                    el
-                                                                                        .conjunction[
-                                                                                        (index +
-                                                                                            1) as
-                                                                                            | 1
-                                                                                            | 2
-                                                                                            | 3
-                                                                                    ]
-                                                                                        .score
-                                                                                )
-                                                                            )
-                                                                        ),
-                                                                        'rounded px-2 text-gray-900'
-                                                                    )}
-                                                                >
-                                                                    {
-                                                                        el
-                                                                            .conjunction[
-                                                                            (index +
-                                                                                1) as
-                                                                                | 1
-                                                                                | 2
-                                                                                | 3
-                                                                        ].score
-                                                                    }
-                                                                    %
-                                                                </span>
-                                                            </div>
-                                                        )
-                                                    )}
-                                                </span>
+                                            (el, i) => (
+                                                <AppointMaybe
+                                                    appointMaybe={el}
+                                                    key={i}
+                                                    pattern={regList[i]}
+                                                />
                                             )
                                         )}
                                     </>
