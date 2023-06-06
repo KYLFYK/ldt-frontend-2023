@@ -12,10 +12,10 @@ export const AuditStats: FC<TProps> = ({ stats }) => {
     return (
         <div className="grid grid-cols-12 gap-5">
             <AuditPieChart
-                wrapperClassName="col-span-12 sm:col-span-4"
+                wrapperClassName="col-span-12 sm:col-span-8 2xl:col-span-4 xl:col-span-6"
                 stats={stats}
             />
-            <div className="col-span-12 grid grid-cols-12 gap-5 sm:col-span-8 sm:grid-cols-8">
+            <div className="col-span-12 grid grid-cols-12 gap-5 sm:col-span-4 sm:grid-cols-4 xl:col-span-6 2xl:col-span-8">
                 <AuditStatItem
                     label={'Всего назначений'}
                     value={stats.cardsCount}
