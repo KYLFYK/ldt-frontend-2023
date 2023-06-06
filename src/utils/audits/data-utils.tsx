@@ -259,14 +259,14 @@ export const appointsRows: (
     },
     {
         dataKey: 'gender',
-        label: 'ПОЛ',
+        label: 'Пол',
         onClick: (dataItem) => {
             nav(getAuditAppointPath(auditId, dataItem.id))
         },
     },
     {
         dataKey: 'birthDate',
-        label: 'дата рождения',
+        label: 'Дата рождения',
         renderFunc: (value) => dayjs(value, 'DD.MM.YYYY').format('DD.MM.YYYY'),
         onClick: (dataItem) => {
             nav(getAuditAppointPath(auditId, dataItem.id))
@@ -274,7 +274,7 @@ export const appointsRows: (
     },
     {
         dataKey: 'mkbCode',
-        label: 'КОД МКБ',
+        label: 'Код МКБ',
         onClick: (dataItem) => {
             nav(getAuditAppointPath(auditId, dataItem.id))
         },
