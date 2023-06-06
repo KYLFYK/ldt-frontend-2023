@@ -11,6 +11,10 @@ export type TInputProps = {
     required?: InputHTMLAttributes<HTMLInputElement>['required']
     id?: InputHTMLAttributes<HTMLInputElement>['id']
     className?: InputHTMLAttributes<HTMLInputElement>['className']
+    placeholder?: InputHTMLAttributes<HTMLInputElement>['placeholder']
+    onChange?: InputHTMLAttributes<HTMLInputElement>['onChange']
+    onBlur?: InputHTMLAttributes<HTMLInputElement>['onBlur']
+    value?: any
     label?: string
     error?: string | null
     additionalLink?: {
@@ -29,6 +33,10 @@ export const Input: FC<TInputProps> = ({
     label,
     additionalLink,
     error,
+    placeholder,
+    onChange,
+    onBlur,
+    value,
 }) => {
     return (
         <div>
@@ -60,7 +68,10 @@ export const Input: FC<TInputProps> = ({
                     autoComplete={autoComplete}
                     required={required}
                     className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${className}`}
-                    placeholder="you@example.com"
+                    placeholder={placeholder}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
                 />
             </div>
             {error && (

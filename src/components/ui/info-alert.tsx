@@ -3,12 +3,14 @@ import React, { FC } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { RoutePaths } from '../../utils/routes/route-paths'
+import { Loader } from './loader'
 
 type TProps = {
     text: string
     subText?: string
     detailsHref?: RoutePaths
     detailsText?: string
+    loading?: boolean
 }
 
 export const InfoAlert: FC<TProps> = ({
@@ -16,15 +18,20 @@ export const InfoAlert: FC<TProps> = ({
     detailsText,
     detailsHref,
     subText,
+    loading,
 }) => {
     return (
         <div className="w-full rounded-md bg-blue-50 p-4 lg:w-1/2">
             <div className="flex">
                 <div className="flex-shrink-0">
-                    <InformationCircleIcon
-                        className="h-5 w-5 text-blue-400"
-                        aria-hidden="true"
-                    />
+                    {loading ? (
+                        <Loader iconClassName="h-5 w-5 fill-blue-600 text-gray-200 dark:text-gray-600" />
+                    ) : (
+                        <InformationCircleIcon
+                            className="h-5 w-5 text-blue-400"
+                            aria-hidden="true"
+                        />
+                    )}
                 </div>
                 <div
                     className={

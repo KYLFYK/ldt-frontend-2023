@@ -1,7 +1,13 @@
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { FieldInputProps, FieldMetaProps, FormikProps } from 'formik/dist/types'
-import React, { Fragment, HTMLAttributes, useMemo, useState } from 'react'
+import React, {
+    Fragment,
+    HTMLAttributes,
+    useCallback,
+    useMemo,
+    useState,
+} from 'react'
 
 import { OptionItem, OptionList } from '../../types/common/components-data'
 import { classNames } from '../../utils/common'
@@ -11,6 +17,7 @@ type TProps<T> = {
     containerClassName?: HTMLAttributes<HTMLDivElement>['className']
     label?: string
     defaultValue?: OptionItem<T>
+    value?: T
     placeHolder?: string
     onChange?: (option: OptionItem<T>) => void
     error?: string | null
@@ -29,12 +36,26 @@ export const Select: <T = string | number>(props: TProps<T>) => JSX.Element = ({
     defaultValue,
     placeHolder = 'Выберите',
     error,
+    onChange,
+    value,
 }) => {
-    const [current, setCurrent] = useState(defaultValue)
+    const [current, setCurrent] = useState(
+        value ? options.find((el) => el.value === value) : defaultValue
+    )
+
+    const handleChange = useCallback(
+        (optionItem: any) => {
+            if (onChange) {
+                onChange(optionItem.value)
+            }
+            setCurrent(optionItem)
+        },
+        [onChange]
+    )
 
     return (
         <div className={classNames('w-56', containerClassName)}>
-            <Listbox value={current} onChange={setCurrent}>
+            <Listbox value={current} onChange={handleChange}>
                 {({ open }) => (
                     <>
                         {label && (

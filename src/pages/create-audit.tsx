@@ -1,20 +1,36 @@
-import axios from 'axios'
 import dayjs from 'dayjs'
-import React, { ChangeEvent, FC, useCallback, useState } from 'react'
+import { Form, Formik } from 'formik'
+import React, {
+    ChangeEvent,
+    FC,
+    useCallback,
+    useEffect,
+    useMemo,
+    useState,
+} from 'react'
 
+import { AuditInitInfoPane } from '../components/audits-create/audit-init-info-pane'
 import { AuditMainParamsForm } from '../components/audits-create/audit-main-params-form'
 import { AuditsCreateHeading } from '../components/audits-create/audits-create-heading'
 import { CheckoutSettings } from '../components/audits-create/checkout-settings'
 import { TSubmitAction } from '../components/audits-create/create-form'
-import { InfoAlert } from '../components/ui/info-alert'
-import { BASE_URL } from '../constants/app'
-import { AuditType } from '../types/audits'
+import { useAppDispatch } from '../ducks'
+import { uploadAuditFileData } from '../ducks/audits/audit-initialization/actions'
+import { useAuditInitSelector } from '../ducks/audits/audit-initialization/selectors'
+import { clearInitialization } from '../ducks/audits/audit-initialization/slice'
+import { AuditStartType, AuditType } from '../types/audits'
 import { CheckoutStatus } from '../types/common/data-types'
 import { UserRole } from '../types/users'
-import { RoutePaths } from '../utils/routes/route-paths'
 
 export const CreateAudit: FC = () => {
-    const [isStarted, setIsStarted] = useState(false)
+    const dispatch = useAppDispatch()
+
+    const { initPending, filePending, initComplete } = useAuditInitSelector()
+
+    const isSomePending = useMemo(
+        () => initPending || filePending,
+        [initPending, filePending]
+    )
 
     const [file, setFile] = useState<File | undefined>(undefined)
 
@@ -28,72 +44,81 @@ export const CreateAudit: FC = () => {
         setFile(undefined)
     }, [])
 
-    const handleCreate = useCallback(async () => {
-        if (file) {
-            setIsStarted(true)
-            const formData = new FormData()
-            formData.set('file', file)
-            const respFile = await axios.post<{
-                createAt: string
-                fileName: string
-                id: number
-                updateAt: string
-            }>(BASE_URL + '/files-upload', formData)
+    const handleFinishForm = useCallback<TSubmitAction>(
+        (formValues) => {
+            if (file) {
+                dispatch(
+                    uploadAuditFileData({
+                        file,
+                        initMeta: {
+                            name: formValues.name,
+                            type: formValues.type,
+                            status: CheckoutStatus.COMPLETED,
+                            dateStart: dayjs().toISOString(),
+                            dateEnd: dayjs(formValues.endDate).toISOString(),
+                            responsible: {
+                                id: '1',
+                                firstName: 'И',
+                                lastName: 'Иванов',
+                                patronymic: 'И',
+                                role: UserRole.EXPERT_DEPUTY,
+                            },
+                            auditReason: formValues.auditReason,
+                        },
+                    })
+                )
+            }
+        },
+        [file]
+    )
 
-            const resp = await axios.post(BASE_URL + '/initialize', {
-                name: 'Проверка_' + respFile.data.id,
-                type: AuditType.TARGET,
-                status: CheckoutStatus.COMPLETED,
-                dateStart: dayjs().toISOString(),
-                dateEnd: dayjs().add(10, 'days').toISOString(),
-                responsible: {
-                    id: '1',
-                    firstName: 'И',
-                    lastName: 'Иванов',
-                    patronymic: 'И',
-                    role: UserRole.EXPERT_DEPUTY,
-                },
-                auditReason: `Проверка на ошибки №` + respFile.data.id,
-                fileId: respFile.data.id,
-            })
-
-            // setLoaded(false)
+    useEffect(() => {
+        return () => {
+            dispatch(clearInitialization())
         }
-    }, [file])
-
-    const handleFinishForm = useCallback<TSubmitAction>((values, actions) => {
-        setTimeout(() => {
-            alert(JSON.stringify(values, null, 2))
-            actions.setSubmitting(false)
-        }, 1000)
     }, [])
 
     return (
-        <div className="w-full">
-            {!isStarted && <AuditsCreateHeading handleCreate={handleCreate} />}
-            <div className="grid grid-cols-12 gap-5 divide-x">
-                {isStarted ? (
-                    <div className="col-span-full flex h-96 items-center justify-center">
-                        <InfoAlert
-                            text="Проводим аудит назначений"
-                            subText="Примерное время ожидания - 8 минут"
-                            detailsText="К списку проверок"
-                            detailsHref={RoutePaths.AUDITS}
-                        />
-                    </div>
-                ) : (
-                    <>
-                        <AuditMainParamsForm
-                            handleFinishForm={handleFinishForm}
-                        />
-                        <CheckoutSettings
-                            file={file}
-                            clearFile={clearFile}
-                            handleFileChange={handleFileChange}
-                        />
-                    </>
+        <Formik
+            initialValues={{
+                name: '',
+                responsible: '',
+                startType: AuditStartType.NOW,
+                endDate: '',
+                type: AuditType.TARGET,
+                auditReason: '',
+                datasetFilters: {
+                    mkbCodes: [],
+                    doctorsId: [],
+                    date: {
+                        start: '',
+                        end: '',
+                    },
+                },
+            }}
+            onSubmit={handleFinishForm}
+        >
+            <div className="w-full">
+                {!(isSomePending || initComplete) && (
+                    <AuditsCreateHeading haveFile={!!file} />
                 )}
+                <Form>
+                    <div className="grid grid-cols-12 gap-5 divide-x">
+                        {isSomePending || initComplete ? (
+                            <AuditInitInfoPane initComplete={initComplete} />
+                        ) : (
+                            <>
+                                <AuditMainParamsForm />
+                                <CheckoutSettings
+                                    file={file}
+                                    clearFile={clearFile}
+                                    handleFileChange={handleFileChange}
+                                />
+                            </>
+                        )}
+                    </div>
+                </Form>
             </div>
-        </div>
+        </Formik>
     )
 }
