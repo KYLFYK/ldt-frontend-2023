@@ -2,7 +2,9 @@ import dayjs from 'dayjs'
 import React, { FC } from 'react'
 
 import { AuditType, IAuditResponsible } from '../../types/audits'
+import { TAllStats } from '../../types/audits/audit-results'
 import { auditTypeToString } from '../../utils/audits'
+import { AuditStats } from './audit-stats'
 
 type TProps = {
     dateStart: string
@@ -10,6 +12,7 @@ type TProps = {
     auditType: AuditType
     responsible: IAuditResponsible
     auditReason: string
+    stats: TAllStats
 }
 
 export const MainInfoTab: FC<TProps> = ({
@@ -18,6 +21,7 @@ export const MainInfoTab: FC<TProps> = ({
     dateEnd,
     responsible,
     dateStart,
+    stats,
 }) => {
     return (
         <div className="w-full">
@@ -49,6 +53,7 @@ export const MainInfoTab: FC<TProps> = ({
                     <span className="text-sm text-gray-800">{auditReason}</span>
                 </div>
             </div>
+            <AuditStats stats={stats} />
         </div>
     )
 }

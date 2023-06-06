@@ -38,6 +38,7 @@ export const Audit: FC = () => {
                                     auditReason={data.auditReason}
                                     auditType={data.type}
                                     responsible={data.responsible}
+                                    stats={data.allStats}
                                 />
                             )}
                         </>
