@@ -3,6 +3,7 @@ import React, { FC } from 'react'
 
 import { useAuditsSelector } from '../../ducks/audits/audits-list/selectors'
 import { Loader } from '../ui/loader'
+import { DashboardChart } from './dashboard-chart'
 import { StatItem } from './stat-item'
 
 export const DashboardStats: FC = () => {
@@ -59,7 +60,9 @@ export const DashboardStats: FC = () => {
                 />
             </div>
             <div className="col-span-6 h-full">
-                <div className="h-full w-full rounded-lg bg-gray-200" />
+                <div className="h-full w-full rounded-lg border border-gray-200">
+                    <DashboardChart />
+                </div>
             </div>
         </div>
     )

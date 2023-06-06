@@ -302,3 +302,24 @@ export const appointsRows: (
         },
     },
 ]
+
+export const AuditResultColors: Record<keyof typeof AuditResultStatus, string> =
+    {
+        [AuditResultStatus.SUCCESS]: '#34D399',
+        [AuditResultStatus.WARNING]: '#FCD34D',
+        [AuditResultStatus.DANGER]: '#EC4899',
+        [AuditResultStatus.UNCHECKED]: '#D1D5DB',
+    }
+
+export const auditResultEnToText: (res: AuditResultStatus) => string = (r) => {
+    switch (r) {
+        case AuditResultStatus.DANGER:
+            return 'Ошибка'
+        case AuditResultStatus.SUCCESS:
+            return 'Успешно'
+        case AuditResultStatus.UNCHECKED:
+            return 'Не проверено'
+        case AuditResultStatus.WARNING:
+            return 'Возможна ошибка'
+    }
+}

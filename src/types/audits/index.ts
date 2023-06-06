@@ -1,6 +1,6 @@
 import { CheckoutStatus } from '../common/data-types'
 import { UserRole } from '../users'
-import { TAllStats, TAppointsResult, TAuditPageResult } from './audit-results'
+import { TAllStats, TAppointsResult } from './audit-results'
 
 export enum AuditStartType {
     NOW = 'now',
@@ -17,13 +17,6 @@ export enum AuditResultStatus {
     WARNING = 'WARNING',
     DANGER = 'DANGER',
     UNCHECKED = 'UNCHECKED',
-}
-
-export enum AuditStatusNum {
-    SUCCESS = 12,
-    WARNING = 12,
-    DANGER = 12,
-    UNCHECKED = 0,
 }
 
 export enum AuditAverageNum {
@@ -45,13 +38,6 @@ export type TAuditDataFilters = {
         start?: string
         end?: string
     }
-}
-
-export type TAuditResult = {
-    success: number
-    warnings: number
-    errors: number
-    unchecked: number
 }
 
 export type IAuditResponsible = {
