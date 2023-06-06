@@ -1,10 +1,10 @@
-import React, { FC, HTMLAttributes } from 'react'
+import React, { FC, HTMLAttributes, ReactNode } from 'react'
 
 import { classNames } from '../../utils/common'
 
 type TProps = {
     label: string
-    value: string
+    value: ReactNode
     className?: HTMLAttributes<HTMLDivElement>['className']
 }
 

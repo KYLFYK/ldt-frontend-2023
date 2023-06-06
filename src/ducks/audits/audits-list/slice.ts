@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import dayjs from 'dayjs'
 
 import { TAuditPageResult } from '../../../types/audits/audit-results'
 import { TPagination } from '../../../types/common/components-data'
@@ -37,10 +38,14 @@ const auditsListSlice = createSlice({
             const paginationPageLastIndex =
                 pagination.currentPage * pagination.onPageCount
 
-            state.data = action.payload
+            const sortedData = action.payload.sort(
+                (a, b) => dayjs(b.dateStart).unix() - dayjs(a.dateStart).unix()
+            )
+
+            state.data = sortedData
             state.loaded = true
             state.paginationData = pagination
-            state.currentPage = action.payload.slice(
+            state.currentPage = sortedData.slice(
                 (pagination.currentPage - 1) * pagination.onPageCount,
                 action.payload.length < paginationPageLastIndex
                     ? action.payload.length

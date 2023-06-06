@@ -4,6 +4,7 @@ import { AuditsFilter } from '../components/audits/audits-filter'
 import { AuditsHeading } from '../components/audits/audits-heading'
 import { AuditsTable } from '../components/audits/audits-table'
 import { EmptyState } from '../components/ui/empty-state'
+import { Loader } from '../components/ui/loader'
 import { useAppDispatch } from '../ducks'
 import { useAuditsSelector } from '../ducks/audits/audits-list/selectors'
 import { setPageSelected } from '../ducks/audits/audits-list/slice'
@@ -11,8 +12,7 @@ import { TPaginationData } from '../types/common/components-data'
 
 export const Audits: FC = () => {
     const dispatch = useAppDispatch()
-    const { loaded, loading, error, currentPage, paginationData } =
-        useAuditsSelector()
+    const { loading, currentPage, paginationData } = useAuditsSelector()
 
     const pagination: TPaginationData = useMemo(() => {
         return {
@@ -43,19 +43,19 @@ export const Audits: FC = () => {
 
     return (
         <div className="w-full">
+            <AuditsHeading />
+            <AuditsFilter />
             {loading ? (
-                <span>Loading</span>
+                <div className="flex h-80 w-full items-center justify-center">
+                    <Loader />
+                </div>
             ) : (
                 <>
                     {currentPage.length > 0 ? (
-                        <>
-                            <AuditsHeading />
-                            <AuditsFilter />
-                            <AuditsTable
-                                currentPage={currentPage}
-                                pagination={pagination}
-                            />
-                        </>
+                        <AuditsTable
+                            currentPage={currentPage}
+                            pagination={pagination}
+                        />
                     ) : (
                         <EmptyState
                             containerClassName="w-full"
