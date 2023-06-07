@@ -72,6 +72,7 @@ export const Appoint: FC = () => {
                                 Диагноз МКБ-10
                             </span>
                             <span className="text-sm text-gray-800">
+                                {selectedAppoint.appointData.mkbCode} |{' '}
                                 {selectedAppoint?.appointData.mkbName}
                             </span>
                         </div>

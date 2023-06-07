@@ -4,10 +4,10 @@ import { AuditResultStatus } from '../types/audits'
 
 export const HomePageMockState = [
     {
-        date: dayjs().format('DD.MM'),
-        [AuditResultStatus.SUCCESS]: 4000,
-        [AuditResultStatus.WARNING]: 2400,
-        [AuditResultStatus.DANGER]: 2400,
+        date: dayjs().format('DD.MM'), // Дата назначения
+        [AuditResultStatus.SUCCESS]: 4000, // Кол-во успешных
+        [AuditResultStatus.WARNING]: 2400, // Кол-во с возможными ошибками
+        [AuditResultStatus.DANGER]: 2400, // Кол-во с ошибками
     },
     {
         date: dayjs().add(1, 'days').format('DD.MM'),
