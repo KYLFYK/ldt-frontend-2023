@@ -1,7 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import dayjs from 'dayjs'
 
-import { TAuditPageResult } from '../../../types/audits/audit-results'
+import {
+    TAuditFilters,
+    TAuditPageResult,
+} from '../../../types/audits/audit-results'
 import { TPagination } from '../../../types/common/components-data'
 import { getBasePaginationData } from '../../../utils/common'
 
@@ -12,6 +15,7 @@ type TState = {
     error: boolean
     currentPage: TAuditPageResult[]
     paginationData: TPagination
+    filters: TAuditFilters
 }
 
 const initialState: TState = {
@@ -21,6 +25,7 @@ const initialState: TState = {
     error: false,
     currentPage: [],
     paginationData: getBasePaginationData(1),
+    filters: {},
 }
 
 const auditsListSlice = createSlice({

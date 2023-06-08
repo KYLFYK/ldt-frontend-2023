@@ -12,7 +12,8 @@ import { TPaginationData } from '../types/common/components-data'
 
 export const Audits: FC = () => {
     const dispatch = useAppDispatch()
-    const { loading, currentPage, paginationData } = useAuditsSelector()
+    const { loading, currentPage, paginationData, filters } =
+        useAuditsSelector()
 
     const pagination: TPaginationData = useMemo(() => {
         return {
@@ -44,7 +45,7 @@ export const Audits: FC = () => {
     return (
         <div className="w-full">
             <AuditsHeading />
-            <AuditsFilter />
+            <AuditsFilter filters={filters} />
             {loading ? (
                 <div className="flex h-80 w-full items-center justify-center">
                     <Loader />

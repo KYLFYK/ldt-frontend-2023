@@ -44,7 +44,6 @@ export const periods: OptionList<Period> = [
     { value: Period.WEEK, label: 'Неделя' },
     { value: Period.YEAR, label: 'Год' },
     { value: Period.DAY, label: 'День' },
-    { value: Period.CUSTOM, label: 'Выбрать период' },
 ]
 
 export const statusOptions: OptionList<CheckoutStatus> = [

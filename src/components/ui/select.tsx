@@ -5,7 +5,9 @@ import React, {
     Fragment,
     HTMLAttributes,
     useCallback,
+    useEffect,
     useMemo,
+    useRef,
     useState,
 } from 'react'
 
@@ -19,8 +21,9 @@ type TProps<T> = {
     defaultValue?: OptionItem<T>
     value?: T
     placeHolder?: string
-    onChange?: (option: OptionItem<T>) => void
+    onChange?: (value: string) => void
     error?: string | null
+    name?: string
 }
 
 export const optionClassName = ({ active }: { active: boolean }) =>
@@ -38,24 +41,33 @@ export const Select: <T = string | number>(props: TProps<T>) => JSX.Element = ({
     error,
     onChange,
     value,
+    name,
 }) => {
+    const inputRef = useRef<HTMLInputElement | null>(null)
+
     const [current, setCurrent] = useState(
         value ? options.find((el) => el.value === value) : defaultValue
     )
 
-    const handleChange = useCallback(
-        (optionItem: any) => {
-            if (onChange) {
-                onChange(optionItem.value)
-            }
-            setCurrent(optionItem)
-        },
-        [onChange]
-    )
+    useEffect(() => {
+        const event = new Event('input', { bubbles: true })
+
+        if (inputRef.current) {
+            inputRef.current.dispatchEvent(event)
+        }
+    }, [current])
+
+    const handleChange = useCallback((optionItem: any) => {
+        setCurrent(optionItem)
+
+        if (onChange) {
+            onChange(optionItem.value)
+        }
+    }, [])
 
     return (
         <div className={classNames('w-56', containerClassName)}>
-            <Listbox value={current} onChange={handleChange}>
+            <Listbox value={current} onChange={handleChange} name={name}>
                 {({ open }) => (
                     <>
                         {label && (
@@ -154,11 +166,20 @@ export function SelectWithFormik<
         meta: FieldMetaProps<ValueType>
     } & TProps<ValueType>
 ) {
-    const { field, meta, form, ...props } = propsData
+    const { field, meta, form, name, ...props } = propsData
 
     const error = useMemo(() => {
         return meta?.error && meta?.touched ? meta.error : null
     }, [])
 
-    return <Select {...field} {...props} error={error} />
+    const handleChange = useCallback(
+        (value: string) => {
+            form.setFieldValue(field.name ?? '', value)
+        },
+        [field, form]
+    )
+
+    return (
+        <Select {...field} {...props} error={error} onChange={handleChange} />
+    )
 }

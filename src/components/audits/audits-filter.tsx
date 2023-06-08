@@ -1,10 +1,15 @@
 import React, { FC } from 'react'
 
+import { TAuditFilters } from '../../types/audits/audit-results'
 import { auditTypeOptions } from '../../utils/audits'
 import { periods, statusOptions } from '../../utils/common/data-utils'
 import { Select } from '../ui/select'
 
-export const AuditsFilter: FC = () => {
+type TProps = {
+    filters: TAuditFilters
+}
+
+export const AuditsFilter: FC<TProps> = ({ filters }) => {
     return (
         <ul
             role="list"
@@ -17,14 +22,7 @@ export const AuditsFilter: FC = () => {
                     placeHolder={'Выберите'}
                     label={'Период'}
                     containerClassName="w-full"
-                />
-            </li>
-            <li className="col-span-1">
-                <Select
-                    options={[]}
-                    placeHolder={'Выберите'}
-                    label={'Ответственный'}
-                    containerClassName="w-full"
+                    value={filters.period}
                 />
             </li>
             <li className="col-span-1">
@@ -33,6 +31,7 @@ export const AuditsFilter: FC = () => {
                     placeHolder={'Выберите'}
                     label={'Тип проверки'}
                     containerClassName="w-full"
+                    value={filters.type}
                 />
             </li>
             <li className="col-span-1">
@@ -41,6 +40,7 @@ export const AuditsFilter: FC = () => {
                     placeHolder={'Выберите'}
                     label={'Статус'}
                     containerClassName="w-full"
+                    value={filters.status}
                 />
             </li>
         </ul>

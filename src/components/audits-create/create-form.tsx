@@ -48,11 +48,10 @@ export const CreateForm: FC = () => {
                 component={InputWithFormik}
             />
             <Field
-                type={'text'}
                 label={'Вид проверки'}
-                name="type"
                 component={SelectWithFormik}
                 options={auditTypeOptions}
+                name="type"
                 containerClassName="w-full"
             />
             <Field

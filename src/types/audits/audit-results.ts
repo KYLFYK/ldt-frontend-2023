@@ -1,5 +1,11 @@
-import { CheckoutStatus } from '../common/data-types'
+import { CheckoutStatus, Period } from '../common/data-types'
 import { AuditType, IAuditResponsible } from './index'
+
+export type TAuditFilters = {
+    period?: Period
+    type?: AuditType
+    status?: CheckoutStatus
+}
 
 export type TAllStats = {
     green: number
