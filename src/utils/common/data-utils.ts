@@ -1,3 +1,5 @@
+import dayjs, { Dayjs } from 'dayjs'
+
 import { OptionList } from '../../types/common/components-data'
 import { CheckoutStatus, Period } from '../../types/common/data-types'
 
@@ -40,11 +42,28 @@ export const checkoutStatusToColorClass: (status: CheckoutStatus) => string = (
 }
 
 export const periods: OptionList<Period> = [
-    { value: Period.MONTHS, label: 'Месяц' },
-    { value: Period.WEEK, label: 'Неделя' },
-    { value: Period.YEAR, label: 'Год' },
     { value: Period.DAY, label: 'День' },
+    { value: Period.WEEK, label: 'Неделя' },
+    { value: Period.MONTHS, label: 'Месяц' },
+    { value: Period.YEAR, label: 'Год' },
 ]
+
+export const getPeriodDatesBetween: (period: Period) => [Dayjs, Dayjs] = (
+    p
+) => {
+    switch (p) {
+        case Period.MONTHS:
+            return [dayjs().add(-1, 'months'), dayjs()]
+        case Period.WEEK:
+            return [dayjs().add(-7, 'days'), dayjs()]
+        case Period.YEAR:
+            return [dayjs().add(-1, 'years'), dayjs()]
+        case Period.DAY:
+            return [dayjs().add(-1, 'days'), dayjs()]
+        default:
+            return [dayjs().add(-1, 'months'), dayjs()]
+    }
+}
 
 export const statusOptions: OptionList<CheckoutStatus> = [
     {

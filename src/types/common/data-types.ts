@@ -4,6 +4,7 @@ export enum Period {
     WEEK = 'week',
     YEAR = 'year',
     DAY = 'day',
+    ANY = 'any',
 }
 
 export enum CheckoutStatus {

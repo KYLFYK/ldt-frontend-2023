@@ -14,7 +14,7 @@ import React, {
 import { OptionItem, OptionList } from '../../types/common/components-data'
 import { classNames } from '../../utils/common'
 
-type TProps<T> = {
+export type TSelectProps<T> = {
     options: OptionList<T>
     containerClassName?: HTMLAttributes<HTMLDivElement>['className']
     label?: string
@@ -32,7 +32,9 @@ export const optionClassName = ({ active }: { active: boolean }) =>
         'relative cursor-default select-none py-2 pl-3 pr-9'
     )
 
-export const Select: <T = string | number>(props: TProps<T>) => JSX.Element = ({
+export const Select: <T = string | number>(
+    props: TSelectProps<T>
+) => JSX.Element = ({
     options,
     containerClassName = '',
     label,
@@ -164,7 +166,7 @@ export function SelectWithFormik<
         field: FieldInputProps<ValueType>
         form: FormikProps<ValuesType>
         meta: FieldMetaProps<ValueType>
-    } & TProps<ValueType>
+    } & TSelectProps<ValueType>
 ) {
     const { field, meta, form, name, ...props } = propsData
 

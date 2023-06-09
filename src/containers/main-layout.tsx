@@ -34,7 +34,7 @@ export const MainLayout: FC = () => {
     }, [pathname, window.innerWidth])
 
     return (
-        <div className="max-h-screen">
+        <div className="h-full max-h-screen">
             {!menuHidden ? (
                 <Menu
                     setSidebarOpen={setSidebarOpen}
@@ -44,7 +44,9 @@ export const MainLayout: FC = () => {
             ) : null}
             <div
                 className={
-                    menuHidden ? 'max-h-screen' : 'max-h-screen lg:pl-72'
+                    menuHidden
+                        ? 'h-full max-h-screen'
+                        : 'h-full max-h-screen lg:pl-72'
                 }
             >
                 <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
@@ -149,12 +151,12 @@ export const MainLayout: FC = () => {
                     </div>
                 </div>
                 <main
-                    className="overflow-y-auto py-4 sm:py-10"
+                    className="h-full overflow-y-auto py-4 sm:py-10"
                     style={{
                         maxHeight: `calc(100vh - 64px)`,
                     }}
                 >
-                    <div className="px-4 sm:px-6 lg:px-8">
+                    <div className="h-full px-4 sm:px-6 lg:px-8">
                         <Outlet />
                     </div>
                 </main>
