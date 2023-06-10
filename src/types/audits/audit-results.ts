@@ -2,9 +2,9 @@ import { CheckoutStatus, Period } from '../common/data-types'
 import { AuditType, IAuditResponsible } from './index'
 
 export type TAuditFilters = {
-    period?: Period
-    type?: AuditType
-    status?: CheckoutStatus
+    period?: Period | 'any'
+    type?: AuditType | 'any'
+    status?: CheckoutStatus | 'any'
 }
 
 export type TAllStats = {

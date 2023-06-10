@@ -17,11 +17,12 @@ import { Table } from '../ui/table'
 
 export const DashboardCheckoutsTable: FC = () => {
     const dispatch = useAppDispatch()
-    const { loading, currentPage, paginationData } = useAuditsSelector()
+    const { loading, currentUnfilteredPage, paginationData } =
+        useAuditsSelector()
     const navigate = useNavigate()
 
     const dataSource: any = useMemo(() => {
-        return currentPage.map((el) => ({
+        return currentUnfilteredPage.map((el) => ({
             name: el.name,
             id: el.id,
             type: el.type,
@@ -34,7 +35,7 @@ export const DashboardCheckoutsTable: FC = () => {
             allStats: el.allStats,
             key: el.id,
         }))
-    }, [currentPage])
+    }, [currentUnfilteredPage])
 
     const rows = useMemo(() => auditsListRows(navigate), [])
 
@@ -73,7 +74,7 @@ export const DashboardCheckoutsTable: FC = () => {
                 </div>
             ) : (
                 <>
-                    {currentPage.length > 0 ? (
+                    {currentUnfilteredPage.length > 0 ? (
                         <Table<TAuditListItem>
                             dataSource={
                                 dataSource as TableDataSource<TAuditListItem>[]

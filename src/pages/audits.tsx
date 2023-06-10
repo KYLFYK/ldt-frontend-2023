@@ -12,8 +12,13 @@ import { TPaginationData } from '../types/common/components-data'
 
 export const Audits: FC = () => {
     const dispatch = useAppDispatch()
-    const { loading, currentPage, paginationData, filters } =
-        useAuditsSelector()
+    const {
+        loading,
+        currentPage,
+        paginationData,
+        filters,
+        currentUnfilteredPage,
+    } = useAuditsSelector()
 
     const pagination: TPaginationData = useMemo(() => {
         return {
@@ -52,18 +57,27 @@ export const Audits: FC = () => {
                 </div>
             ) : (
                 <>
-                    {currentPage.length > 0 ? (
-                        <AuditsTable
-                            currentPage={currentPage}
-                            pagination={pagination}
-                        />
+                    {currentUnfilteredPage.length > 0 ? (
+                        <>
+                            {currentPage.length > 0 ? (
+                                <AuditsTable
+                                    currentPage={currentPage}
+                                    pagination={pagination}
+                                />
+                            ) : (
+                                <EmptyState
+                                    containerClassName="w-full"
+                                    title={'Записи отсутствуют'}
+                                    description={
+                                        'По необходимым параметрам записей не найдено'
+                                    }
+                                />
+                            )}
+                        </>
                     ) : (
                         <EmptyState
                             containerClassName="w-full"
                             title={'Записи отсутствуют'}
-                            description={
-                                'По необходимым параметрам записей не найдено'
-                            }
                         />
                     )}
                 </>
