@@ -1,9 +1,12 @@
-import React, { FC, useMemo } from 'react'
+import React, { FC, useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch } from '../../ducks'
 import { useCurrentAudit } from '../../ducks/audits/current/selectors'
-import { setAuditResultsPage } from '../../ducks/audits/current/slice'
+import {
+    setAppointsFilters,
+    setAuditResultsPage,
+} from '../../ducks/audits/current/slice'
 import { AuditResultStatus } from '../../types/audits'
 import { TAppointsResult } from '../../types/audits/audit-results'
 import {
@@ -11,6 +14,7 @@ import {
     TableDataSource,
 } from '../../types/common/components-data'
 import { appointsRows, averageToResStatus } from '../../utils/audits/data-utils'
+import { Select } from '../ui/select'
 import { Table } from '../ui/table'
 
 export type TAppointTableData<T = TAppointsResult['appointData']> = T & {
@@ -23,11 +27,12 @@ export const AppointsTab: FC = () => {
     const dispatch = useAppDispatch()
     const nav = useNavigate()
 
-    const { currentResultsPagination, currentResults, data } = useCurrentAudit()
+    const { currentResultsPagination, filteredResults, data } =
+        useCurrentAudit()
 
     const tableData: TableDataSource<TAppointTableData>[] = useMemo(
         () =>
-            currentResults.map((el) => {
+            filteredResults.map((el) => {
                 return {
                     gender: el.appointData.gender,
                     birthDate: el.appointData.birthDate,
@@ -49,7 +54,7 @@ export const AppointsTab: FC = () => {
                     key: el.id,
                 }
             }),
-        [currentResults]
+        [filteredResults]
     )
 
     const paginationData: TPaginationData = useMemo(
@@ -78,13 +83,54 @@ export const AppointsTab: FC = () => {
 
     const rows = useMemo(() => appointsRows(nav, data?.id ?? ''), [data])
 
+    const handleFilterChange = useCallback(
+        (value: AuditResultStatus | 'all') => {
+            dispatch(
+                setAppointsFilters({
+                    resStatus: value === 'all' ? undefined : value,
+                })
+            )
+        },
+        []
+    )
+
     return (
         <div className="max-w-full">
-            <Table<TAppointTableData>
-                dataSource={tableData}
-                rows={rows}
-                pagination={paginationData}
-            />
+            <div className="my-8 flex gap-4">
+                <Select
+                    defaultValue={{
+                        label: 'Все',
+                        value: 'all',
+                    }}
+                    onChange={handleFilterChange as any}
+                    label={'Отфильтровать по статусу'}
+                    options={[
+                        {
+                            label: 'Все',
+                            value: 'all',
+                        },
+                        {
+                            label: 'Успешные',
+                            value: AuditResultStatus.SUCCESS,
+                        },
+                        {
+                            label: 'Возможны ошибки',
+                            value: AuditResultStatus.WARNING,
+                        },
+                        {
+                            label: 'С ошибками',
+                            value: AuditResultStatus.DANGER,
+                        },
+                    ]}
+                />
+            </div>
+            <div>
+                <Table<TAppointTableData>
+                    dataSource={tableData}
+                    rows={rows}
+                    pagination={paginationData}
+                />
+            </div>
         </div>
     )
 }

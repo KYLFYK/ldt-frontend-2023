@@ -1,5 +1,3 @@
-import { string } from 'yup'
-
 import {
     AuditAverageNum,
     AuditResultStatus,
@@ -47,6 +45,19 @@ export const scoreNumToStatus: (st: number) => AuditResultStatus = (st) => {
             return AuditResultStatus.SUCCESS
         case st >= AuditScoreNum.WARNING:
             return AuditResultStatus.WARNING
+        default:
+            return AuditResultStatus.DANGER
+    }
+}
+
+export const hardScoreToStatus: (st: number) => AuditResultStatus = (st) => {
+    switch (true) {
+        case st >= AuditAverageNum.SUCCESS:
+            return AuditResultStatus.SUCCESS
+        case st >= AuditAverageNum.WARNING:
+            return AuditResultStatus.WARNING
+        case st >= AuditAverageNum.DANGER:
+            return AuditResultStatus.DANGER
         default:
             return AuditResultStatus.DANGER
     }
