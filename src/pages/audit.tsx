@@ -52,7 +52,7 @@ export const Audit: FC = () => {
                 {
                     name: 'Отчёты',
                     key: 'reports',
-                    component: <AuditReports />,
+                    component: <AuditReports links={data.resultDocs} />,
                 },
             ]
         } else return []

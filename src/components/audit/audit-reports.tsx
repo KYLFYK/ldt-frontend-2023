@@ -1,8 +1,17 @@
 import React, { FC } from 'react'
 
 import { Button } from '../ui/button'
+import { getLink } from './audit-heading'
 
-export const AuditReports: FC = () => {
+type TProps = {
+    links: {
+        xl_href: string
+        csv_href: string
+        pdf_report: string
+    }
+}
+
+export const AuditReports: FC<TProps> = ({ links }) => {
     return (
         <div className="mt-x w-full">
             <div className="my-8">
@@ -21,9 +30,16 @@ export const AuditReports: FC = () => {
                             </p>
                         </div>
                         <div className="mt-auto">
-                            <Button type="button" view="secondary">
-                                Сформировать →
-                            </Button>
+                            <a
+                                href={getLink(links.xl_href)}
+                                download={true}
+                                target="_blank"
+                                type="button"
+                            >
+                                <Button type="button" view="secondary">
+                                    Сформировать →
+                                </Button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -36,9 +52,16 @@ export const AuditReports: FC = () => {
                             <p>Важные показатели для заведующего отделения</p>
                         </div>
                         <div className="mt-auto">
-                            <Button type="button" view="secondary">
-                                Сформировать →
-                            </Button>
+                            <a
+                                href={getLink(links.xl_href)}
+                                download={true}
+                                target="_blank"
+                                type="button"
+                            >
+                                <Button type="button" view="secondary">
+                                    Сформировать →
+                                </Button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -54,9 +77,16 @@ export const AuditReports: FC = () => {
                             </p>
                         </div>
                         <div className="mt-auto">
-                            <Button type="button" view="secondary">
-                                Сформировать →
-                            </Button>
+                            <a
+                                href={getLink(links.xl_href)}
+                                download={true}
+                                target="_blank"
+                                type="button"
+                            >
+                                <Button type="button" view="secondary">
+                                    Сформировать →
+                                </Button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -80,9 +110,16 @@ export const AuditReports: FC = () => {
                             </p>
                         </div>
                         <div className="mt-auto">
-                            <Button type="button" view="secondary">
-                                Сформировать →
-                            </Button>
+                            <a
+                                href={getLink(links.xl_href)}
+                                download={true}
+                                target="_blank"
+                                type="button"
+                            >
+                                <Button type="button" view="secondary">
+                                    Сформировать →
+                                </Button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -98,9 +135,16 @@ export const AuditReports: FC = () => {
                             </p>
                         </div>
                         <div className="mt-auto">
-                            <Button type="button" view="secondary">
-                                Сформировать →
-                            </Button>
+                            <a
+                                href={getLink(links.xl_href)}
+                                download={true}
+                                target="_blank"
+                                type="button"
+                            >
+                                <Button type="button" view="secondary">
+                                    Сформировать →
+                                </Button>
+                            </a>
                         </div>
                     </div>
                 </div>
